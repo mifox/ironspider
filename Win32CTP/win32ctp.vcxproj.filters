@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{89219d30-17ae-4002-a69b-3ae1e5a45cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{6a4b8da3-47f2-4c33-8a42-e6550ce5b582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\webserver">
+      <UniqueIdentifier>{edde4cae-066e-408f-9af1-f7e930e5743e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\myapi">
+      <UniqueIdentifier>{a9c6da06-4fc7-438a-bbdd-6a1140393910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Zhread">
+      <UniqueIdentifier>{67ee6012-d3cf-4775-a7b4-1ce32f9844fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\atk">
+      <UniqueIdentifier>{f197f124-8d5d-4234-98b3-9bbf21aed249}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\LinuxProject2\ConfigParser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\base64.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\socket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\stdHelpers.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\Tracer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\UrlHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\PathHelper.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\PublicFuncs.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\TraderSpi.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\webserverInstance.h">
+      <Filter>源文件\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Linux2ctp\myapi\myapi.h">
+      <Filter>源文件\myapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Linux2ctp\myapi\myMdapi.h">
+      <Filter>源文件\myapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\MdSpi.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ConditionImpl.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\config.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Debug.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\DeferredInterruptionScope.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\FastLock.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\FastRecursiveLock.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\IntrusivePtr.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Monitor.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\MutexImpl.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\RecursiveMutexImpl.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Scheduling.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\SemaphoreImpl.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\State.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Status.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadImpl.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadOps.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadQueue.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\TimeStrategy.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\TSS.h">
+      <Filter>源文件\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\calcstr.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\config.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\AtkTraderSpi.h">
+      <Filter>源文件\atk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\atk.h">
+      <Filter>源文件\atk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\myinclude\DINGFtdcMduserApi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\myinclude\DINGFtdcTraderApi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\myinclude\DINGFtdcUserApiDataType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\myinclude\DINGFtdcUserApiStruct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\LinuxProject2\ConfigParser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\PathHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\PublicFuncs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\testapi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\TraderSpi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\base64.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\socket.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\stdHelpers.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\UrlHelper.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\webserver.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\webserverInstance.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linux2ctp\myapi\myapi.cpp">
+      <Filter>源文件\myapi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linux2ctp\myapi\myMdapi.cpp">
+      <Filter>源文件\myapi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\MdSpi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ConcurrentExecutor.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Condition.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\CountingSemaphore.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\FastMutex.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\FastRecursiveMutex.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Monitor.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Mutex.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PoolExecutor.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityCondition.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityInheritanceMutex.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityMutex.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PrioritySemaphore.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\RecursiveMutex.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\RecursiveMutexImpl.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Semaphore.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\SynchronousExecutor.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Thread.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadedExecutor.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadImpl.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadLocalImpl.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadOps.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadQueue.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Time.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\AtomicCount.cxx">
+      <Filter>源文件\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\calcstr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\config.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\atk.cpp">
+      <Filter>源文件\atk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\AtkTraderSpi.cpp">
+      <Filter>源文件\atk</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\LinuxProject2\zthread\src\config.h.in">
+      <Filter>源文件\Zhread</Filter>
+    </None>
+    <None Include="..\LinuxProject2\zthread\src\Makefile.am">
+      <Filter>源文件\Zhread</Filter>
+    </None>
+    <None Include="..\LinuxProject2\zthread\src\Makefile.in">
+      <Filter>源文件\Zhread</Filter>
+    </None>
+    <None Include="config.ini">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="log4cplus.properties">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
+</Project>

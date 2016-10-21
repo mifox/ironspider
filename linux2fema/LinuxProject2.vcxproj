@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{527D217B-CDD0-46EF-B1A8-4CEA541216E1}</ProjectGuid>
+    <RootNamespace>linux2fema</RootNamespace>
+    <ProjectName>linux2fema</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\c++\6;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\x86_64-linux-gnu\c++\6;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\c++\6\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0003\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0005\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\x86_64-linux-gnu;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include;myapi;..\LinuxProject2;myinclude;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /rebuild "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeReBuildCommandLine>
+    <NMakeOutput>$(ProjectDir)LinuxProject2-Debug.vgdbsettings</NMakeOutput>
+    <IncludePath>..\LinuxProject2\include;myapi</IncludePath>
+    <ReferencePath />
+    <LibraryPath>..\LinuxProject2\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Release;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\c++\4.8;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\x86_64-linux-gnu\c++\4.8;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\c++\4.8\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0001\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0003\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0002\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include\x86_64-linux-gnu;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.101.128\0000\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes>$(ProjectDir)\gcc_Release.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /rebuild "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeReBuildCommandLine>
+    <NMakeOutput>$(ProjectDir)LinuxProject2-Release.vgdbsettings</NMakeOutput>
+    <IncludePath />
+    <ReferencePath />
+    <LibraryPath />
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\LinuxProject2\atk.cpp" />
+    <ClCompile Include="..\LinuxProject2\AtkTraderSpi.cpp" />
+    <ClCompile Include="..\LinuxProject2\calcstr.cpp" />
+    <ClCompile Include="..\LinuxProject2\config.cpp" />
+    <ClCompile Include="..\LinuxProject2\ConfigParser.cpp" />
+    <ClCompile Include="..\LinuxProject2\MdSpi.cpp" />
+    <ClCompile Include="..\LinuxProject2\PathHelper.cpp" />
+    <ClCompile Include="..\LinuxProject2\PublicFuncs.cpp" />
+    <ClCompile Include="..\LinuxProject2\testapi.cpp" />
+    <ClCompile Include="..\LinuxProject2\TraderSpi.cpp" />
+    <ClCompile Include="..\LinuxProject2\webserver\base64.cpp" />
+    <ClCompile Include="..\LinuxProject2\webserver\socket.cpp" />
+    <ClCompile Include="..\LinuxProject2\webserver\stdHelpers.cpp" />
+    <ClCompile Include="..\LinuxProject2\webserver\UrlHelper.cpp" />
+    <ClCompile Include="..\LinuxProject2\webserver\webserver.cpp" />
+    <ClCompile Include="..\LinuxProject2\webserver\webserverInstance.cpp" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\AtomicCount.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\ConcurrentExecutor.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\Condition.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\CountingSemaphore.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\FastMutex.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\FastRecursiveMutex.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\Monitor.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\Mutex.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\PoolExecutor.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityCondition.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityInheritanceMutex.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityMutex.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\PrioritySemaphore.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\RecursiveMutex.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\RecursiveMutexImpl.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\Semaphore.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\SynchronousExecutor.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\Thread.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadedExecutor.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadImpl.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadLocalImpl.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadOps.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadQueue.cxx" />
+    <ClCompile Include="..\LinuxProject2\zthread\src\Time.cxx" />
+    <ClCompile Include="myapi\myapi.cpp" />
+    <ClCompile Include="myapi\myMdapi.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\LinuxProject2\log4cplus.properties">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="..\LinuxProject2\zthread\src\config.h.in">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="..\LinuxProject2\zthread\src\Makefile.am">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="..\LinuxProject2\zthread\src\Makefile.in">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="debug.mak" />
+    <None Include="LinuxProject2-Debug.vgdbsettings" />
+    <None Include="LinuxProject2-Release.vgdbsettings" />
+    <None Include="Makefile" />
+    <None Include="release.mak" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\LinuxProject2\atk.h" />
+    <ClInclude Include="..\LinuxProject2\AtkTraderSpi.h" />
+    <ClInclude Include="..\LinuxProject2\calcstr.h" />
+    <ClInclude Include="..\LinuxProject2\config.h" />
+    <ClInclude Include="..\LinuxProject2\MdSpi.h" />
+    <ClInclude Include="..\LinuxProject2\PathHelper.h" />
+    <ClInclude Include="..\LinuxProject2\PublicFuncs.h" />
+    <ClInclude Include="..\LinuxProject2\TraderSpi.h" />
+    <ClInclude Include="..\LinuxProject2\webserver\base64.h" />
+    <ClInclude Include="..\LinuxProject2\webserver\socket.h" />
+    <ClInclude Include="..\LinuxProject2\webserver\Tracer.h" />
+    <ClInclude Include="..\LinuxProject2\webserver\UrlHelper.h" />
+    <ClInclude Include="..\LinuxProject2\webserver\webserver.h" />
+    <ClInclude Include="..\LinuxProject2\webserver\webserverInstance.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\ConditionImpl.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\config.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\Debug.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\DeferredInterruptionScope.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\FastLock.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\FastRecursiveLock.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\IntrusivePtr.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\Monitor.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\MutexImpl.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\RecursiveMutexImpl.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\Scheduling.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\SemaphoreImpl.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\State.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\Status.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadImpl.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadOps.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadQueue.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\TimeStrategy.h" />
+    <ClInclude Include="..\LinuxProject2\zthread\src\TSS.h" />
+    <ClInclude Include="include\USTPFtdcMduserApi.h" />
+    <ClInclude Include="include\USTPFtdcTraderApi.h" />
+    <ClInclude Include="include\USTPFtdcUserApiDataType.h" />
+    <ClInclude Include="include\USTPFtdcUserApiStruct.h" />
+    <ClInclude Include="myapi\myapi.h" />
+    <ClInclude Include="myapi\myMdapi.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

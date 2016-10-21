@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\webserver">
+      <UniqueIdentifier>{a3444812-6646-489d-bb88-36fc33a135a9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="..\LinuxProject2\log4cplus.properties">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\LinuxProject2\PublicFuncs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\testapi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\TraderSpi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\base64.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\socket.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\stdHelpers.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\UrlHelper.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\webserver.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\webserverInstance.cpp">
+      <Filter>源文件\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\ConfigParser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\PathHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\LinuxProject2\TraderSpi.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\PublicFuncs.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\include\USTPFtdcMduserApi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\include\USTPFtdcTraderApi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\include\USTPFtdcUserApiStruct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\include\USTPFtdcUserApiDataType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\socket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\base64.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\Tracer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\stdHelpers.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\UrlHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\webserverInstance.h">
+      <Filter>源文件\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\ConfigParser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\PathHelper.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

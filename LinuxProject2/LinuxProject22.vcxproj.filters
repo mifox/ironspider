@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{711ede78-d055-453b-99ef-5d0aea81b3ea}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{93e50de9-aed8-4952-8329-438a2418aec8}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{001740c0-fc49-4522-9fce-ceef0a84700b}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{83b50260-6dab-42aa-9319-d7828ecf1b5f}</UniqueIdentifier>
+      <Extensions>*.mak</Extensions>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{044e81ea-3098-40c2-af52-960051b91659}</UniqueIdentifier>
+      <Extensions>*.vgdbsettings</Extensions>
+    </Filter>
+    <Filter Include="Source files\webserver">
+      <UniqueIdentifier>{001d2e5d-8483-4324-8ece-b726945b9d59}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PublicFuncs.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="testapi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TraderSpi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="webserver\base64.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="webserver\stdHelpers.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="webserver\socket.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="webserver\webserver.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="webserver\UrlHelper.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="webserver\webserverInstance.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="PathHelper.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigParser.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="calcstr.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="atk.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="AtkTraderSpi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="log4cplus.properties">
+      <Filter>Source files</Filter>
+    </None>
+    <None Include="LinuxProject22-Debug.vgdbsettings" />
+    <None Include="LinuxProject22-Release.vgdbsettings" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PublicFuncs.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="TraderSpi.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcMduserApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcTraderApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcUserApiDataType.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcUserApiStruct.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="webserver\base64.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="webserver\stdHelpers.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="webserver\Tracer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="webserver\socket.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="webserver\webserver.h">
+      <Filter>Source files\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="webserver\webserverInstance.h">
+      <Filter>Source files\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="calcstr.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="atk.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="AtkTraderSpi.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{711ede78-d055-453b-99ef-5d0aea81b3ea}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{93e50de9-aed8-4952-8329-438a2418aec8}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{001740c0-fc49-4522-9fce-ceef0a84700b}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{83b50260-6dab-42aa-9319-d7828ecf1b5f}</UniqueIdentifier>
+      <Extensions>*.mak</Extensions>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{044e81ea-3098-40c2-af52-960051b91659}</UniqueIdentifier>
+      <Extensions>*.vgdbsettings</Extensions>
+    </Filter>
+    <Filter Include="Source files\webserver">
+      <UniqueIdentifier>{274bb98b-56cd-4f5d-81ba-c4da141ebb2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\myapi">
+      <UniqueIdentifier>{a9105ae6-8282-44d8-87c3-090dc5235995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Zhread">
+      <UniqueIdentifier>{bc8bb752-af4c-425a-a272-4e6aea2a4794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\atk">
+      <UniqueIdentifier>{920b9a8f-ff99-4a7b-8c21-5ccc00e65e35}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\LinuxProject2\ConfigParser.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\PathHelper.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\PublicFuncs.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\testapi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\TraderSpi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\base64.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\socket.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\stdHelpers.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\webserver.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\webserverInstance.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\webserver\UrlHelper.cpp">
+      <Filter>Source files\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\MdSpi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="myapi\myMdapi.cpp">
+      <Filter>Source files\myapi</Filter>
+    </ClCompile>
+    <ClCompile Include="myapi\myapi.cpp">
+      <Filter>Source files\myapi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ConcurrentExecutor.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Condition.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\CountingSemaphore.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\FastMutex.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\FastRecursiveMutex.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Monitor.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Mutex.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PoolExecutor.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityCondition.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityInheritanceMutex.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PriorityMutex.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\PrioritySemaphore.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\RecursiveMutex.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\RecursiveMutexImpl.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Semaphore.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\SynchronousExecutor.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Thread.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadedExecutor.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadImpl.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadLocalImpl.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadOps.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\ThreadQueue.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\Time.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\zthread\src\AtomicCount.cxx">
+      <Filter>Source files\Zhread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\calcstr.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\config.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\atk.cpp">
+      <Filter>Source files\atk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LinuxProject2\AtkTraderSpi.cpp">
+      <Filter>Source files\atk</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="LinuxProject2-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="LinuxProject2-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="..\LinuxProject2\log4cplus.properties" />
+    <None Include="..\LinuxProject2\zthread\src\config.h.in">
+      <Filter>Source files\Zhread</Filter>
+    </None>
+    <None Include="..\LinuxProject2\zthread\src\Makefile.am">
+      <Filter>Source files\Zhread</Filter>
+    </None>
+    <None Include="..\LinuxProject2\zthread\src\Makefile.in">
+      <Filter>Source files\Zhread</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\LinuxProject2\PathHelper.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\PublicFuncs.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\TraderSpi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\base64.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\socket.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\Tracer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\UrlHelper.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\webserver.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\webserver\webserverInstance.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\MdSpi.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="myapi\myMdapi.h">
+      <Filter>Source files\myapi</Filter>
+    </ClInclude>
+    <ClInclude Include="myapi\myapi.h">
+      <Filter>Source files\myapi</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcMduserApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcTraderApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcUserApiDataType.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\USTPFtdcUserApiStruct.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ConditionImpl.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\config.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Debug.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\DeferredInterruptionScope.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\FastLock.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\FastRecursiveLock.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\IntrusivePtr.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Monitor.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\MutexImpl.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\RecursiveMutexImpl.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Scheduling.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\SemaphoreImpl.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\State.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\Status.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadImpl.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadOps.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\ThreadQueue.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\TimeStrategy.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\zthread\src\TSS.h">
+      <Filter>Source files\Zhread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\calcstr.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\config.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\AtkTraderSpi.h">
+      <Filter>Source files\atk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LinuxProject2\atk.h">
+      <Filter>Source files\atk</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
