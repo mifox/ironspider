@@ -6,3 +6,5 @@
 /Win32CTP/m/comn - 副本 (7).html
 *.log
 *.old
+/ipch
+CodeDB
