@@ -96,7 +96,7 @@ double getdff()
 	QueryPerformanceFrequency(&large_interger);
 	return (double)large_interger.QuadPart;
 #else
-	return 1;
+	return 1000000;
 #endif
 }
 
@@ -129,7 +129,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	configFromIniFile();
 
 
-	CMyMdApi *pMd = CMyMdApi::CreateFtdcTraderApi("");	
+	CMyMdApi *pMd = CMyMdApi::CreateFtdcMdApi("");	
 
 	g_puserMdapi=pMd;
 	CMdSpi spiMd((CMyMdApi *)pMd);
@@ -168,7 +168,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	pTrader->Init();
 	CDINGFtdcInputOrderField attackReq={0};
 	//----1.0----登录计时
-	for (int i=1;i<4;i++)
+	for (int i=1;i<25;i++)
 	{
 		loginedTimes=i;
 		//pTdSpi->ReqUserLogin(appId,userId,passwd);
@@ -246,7 +246,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 		long long myMillisecondsnow = sys.seconds*1000;
 		long long targetAcc = ((8*60+50)*60)*1000;
 		printf("%d\n",myMillisecondsnow);
-		int logginWaitTime=30000;
+		int logginWaitTime=20333;
 		if (myMillisecondsnow > targetAcc)
 		{
 			logginWaitTime =1333;
@@ -290,27 +290,27 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 		LOG4CPLUS_DEBUG(log_1,"closeprice1"<<closeprice<<endl);
 		if (attackReq.Direction == DING_FTDC_D_Buy && attackReq.LimitPrice < closeprice)
 		{
-			LOG4CPLUS_DEBUG(log_1,"校验通过"<<closeprice<<endl);
-			printf("校验通过\n");
+			LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice<<endl);
+			printf("check pass\n");
 			common_params_maps["closepricecheck"]="check success!!!";
 		}else if (attackReq.Direction == DING_FTDC_D_Sell && attackReq.LimitPrice > closeprice)
 		{
-			LOG4CPLUS_DEBUG(log_1,"校验通过"<<closeprice<<endl);
-			printf("校验通过\n");
+			LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice<<endl);
+			printf("check pass\n");
 			common_params_maps["closepricecheck"]="check success!!!";
 		}
 		else
 		{
-			LOG4CPLUS_DEBUG(log_1,"校验失败"<<closeprice<<endl);
-			printf("校验失败\n");
+			LOG4CPLUS_DEBUG(log_1,"check failed"<<closeprice<<endl);
+			printf("check failed\n");
 			common_params_maps["closepricecheck"]="check failure!!!";
 		}
-
+		car->waitForState(10000 ,EVENT_TD_LOGOUT);
 		CDINGFtdcReqUserLogoutField reqlogout={0};
 		strcpy(reqlogout.BrokerID,appId);
 		strcpy(reqlogout.UserID	,userId);
-		ret=pTrader->ReqUserLogout(&reqlogout,nRequestID++);
-		car->waitForState(10000 ,EVENT_TD_LOGOUT);
+		nRequestID++;
+		ret=pTrader->ReqUserLogout(&reqlogout,nRequestID);
 
 	}
 	car->waitForState(10000,EVENT_TD_CONNECT);
@@ -319,9 +319,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 		int localstart_i=mktime(&localstart[i]);
 		int localend_i=mktime(&localend[i]);
 		int remote_i;
-		if (tmCZCE.size()>1)
+		if (tmCZCE.size() > 1 && atkexchange==0)
 		{
 			remote_i=mktime(&tmCZCE[i]);
+		}
+		else if(tmDCE.size()>1 && atkexchange==2)
+		{
+			remote_i = mktime(&tmDCE[i]);
 		}
 		else
 		{
@@ -373,7 +377,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	printf("------[ret]-----%d\n",ret);
 	if (ret!=0) //返回值=0,成功
 	{
-		LOG4CPLUS_DEBUG_FMT(log_1,"登录成功");
+		LOG4CPLUS_DEBUG_FMT(log_1,"login successed 1");
 	}
 	car->waitForState(100000 ,EVENT_TD_LOGIN);
 
@@ -420,7 +424,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 	long testTime2_l=0;
 	long attackTime_l=0;
-
+	map<string,string>::iterator it;
 
 	while(1)
 		{
@@ -486,11 +490,12 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			}
 
 			CDINGFtdcInputOrderField attackReq={0};
-			//map<string,string>::iterator it=common_params_maps.find("instrument1");
+			it=common_params_maps.find("instrument1");
 			if (it!=common_params_maps.end())
 			{
 				strcpy(attackReq.InstrumentID,common_params_maps["instrument1"].data());
 			}
+			
 
 			it=common_params_maps.find("direction1");
 			if (it!=common_params_maps.end())
@@ -517,22 +522,30 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				closeprice=atof((common_params_maps["closeprice1"]).data());
 
 			}
+			else
+			{
+				memcpy(&attackReq,&test_attackReq,sizeof(CDINGFtdcInputOrderField));
+				attackvol  = 1;
+				closeprice = test_attackReq.LimitPrice+10;
+				LOG4CPLUS_DEBUG(log_1,"No web input"<<endl);
+			}
+
 			LOG4CPLUS_DEBUG(log_1,"closeprice1"<<closeprice<<endl);
 			if (attackReq.Direction == DING_FTDC_D_Buy && attackReq.LimitPrice < closeprice)
 			{
-				LOG4CPLUS_DEBUG(log_1,"校验通过"<<closeprice<<endl);
-				printf("校验通过\n");
+				LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice<<endl);
+				printf("check pass\n");
 				common_params_maps["closepricecheck"]="check success!!!";
 			}else if (attackReq.Direction == DING_FTDC_D_Sell && attackReq.LimitPrice > closeprice)
 			{
-				LOG4CPLUS_DEBUG(log_1,"校验通过"<<closeprice<<endl);
-				printf("校验通过\n");
+				LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice<<endl);
+				printf("check pass\n");
 				common_params_maps["closepricecheck"]="check success!!!";
 			}
 			else
 			{
-				LOG4CPLUS_DEBUG(log_1,"校验失败"<<closeprice<<endl);
-				printf("校验失败\n");
+				LOG4CPLUS_DEBUG(log_1,"check failed"<<closeprice<<endl);
+				printf("check failed\n");
 				common_params_maps["closepricecheck"]="check failure!!!";
 			}
 			//common_params_maps["closepricecheck"]="<a herf=setAttckInstrument.html>check</a>";
@@ -598,13 +611,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			else if (atkexchange == 1)//郑州商品交易所
 			{
 
-				testTime_l=(long)(good(testAttackTime))+30;
+				testTime_l=(long)(good(testAttackTime));
 				LOG4CPLUS_DEBUG_FMT(log_1,"testTime_l=%d\n",testTime_l);
 			}
 			else if (atkexchange == 2)//大连商品交易所
 			{
 
-				testTime_l=(long)(good(testAttackTime))+30;
+				testTime_l=(long)(good(testAttackTime));
 				LOG4CPLUS_DEBUG_FMT(log_1,"testTime_l=%d\n",testTime_l);
 			}
 			testTime2_l=(long)(good(testAttackTime2));
@@ -648,8 +661,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			if (atkmode != 2) //mode2只需要进攻
 			{		
 				//long targetSeconds =  ((0*60+0)*60+0)*1000; 
-				//[s0]测试进攻时间
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s0]测试进攻时间out\n");
+				//[s0]test attack time 
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s0]test attack time out\n");
 				targetSeconds = testTime_l;
 
 
@@ -697,11 +710,11 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 
 				//----------精确记时----------
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s0]测试进攻时间　[myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s0]test attack time 　[myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
 
 				if (myMilliseconds > targetSeconds - 6000 && myMilliseconds < targetSeconds + 3000)
 				{
-					LOG4CPLUS_DEBUG_FMT(log_1,"[s0]测试进攻时间in\n");
+					LOG4CPLUS_DEBUG_FMT(log_1,"[s0]test attack time in\n");
 					strcpy(instId,test_attackReq.InstrumentID);
 					dir=test_attackReq.Direction;
 					kpp=test_attackReq.OffsetFlag;		
@@ -832,7 +845,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				//map<string,string>::iterator it;
 
 
-				for(it=  common_params_maps.begin();it!=  common_params_maps.end();++it)
+				for(it=common_params_maps.begin();it!= common_params_maps.end();++it)
 				{			 
 					cout<<"key: "<<it->first <<" value: "+it->second<<endl;
 				}
@@ -898,13 +911,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				}
 
 				
-				//[s1]撤单时间
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s1]撤单时间out\n");
+				//[s1]cancel order time 
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s1]cancel order time out\n");
 				targetSeconds = testTime_l + 60000;
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s1]撤单时间 [myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s1]cancel order time  [myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
 				if (myMilliseconds > targetSeconds - 4000 && myMilliseconds < targetSeconds + 4000)
 				{	
-					LOG4CPLUS_DEBUG_FMT(log_1,"[s1]撤单时间in\n");
+					LOG4CPLUS_DEBUG_FMT(log_1,"[s1]cancel order time in\n");
 					for(i=0; i<atkorderList.size()-1; i++){
 
 						//计算最后一张无效效单时间
@@ -916,7 +929,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 
 
-							LOG4CPLUS_DEBUG_FMT(log_1,"[计算最后一张无效单时间] :i < atkorderList.size()+1");
+							LOG4CPLUS_DEBUG_FMT(log_1,"[calc last no inserted order] :i < atkorderList.size()+1");
 							if (atkorderList[i]->main.OrderStatus == DING_FTDC_OS_Canceled
 								&& atkorderList[i+1]->main.OrderStatus == DING_FTDC_OS_NoTradeQueueing)
 							{
@@ -1038,14 +1051,14 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			}		
 		}
 
-		//[s1.5]测试进攻时间
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.5]测试进攻时间out\n");
+		//[s1.5]test attack time 
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.5]test attack time out\n");
 				targetSeconds = testTime2_l+timedeta855;
 
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.5]测试进攻时间[myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.5]test attack time [myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
 				if (myMilliseconds > testTime2_l - 4000 && myMilliseconds < testTime2_l + 4000)
 				{
-					LOG4CPLUS_DEBUG_FMT(log_1,"[s1.5]测试进攻时间in\n");
+					LOG4CPLUS_DEBUG_FMT(log_1,"[s1.5]test attack time in\n");
 					strcpy(instId,test_attackReq.InstrumentID);
 					dir=test_attackReq.Direction;
 					kpp=test_attackReq.OffsetFlag;		
@@ -1210,21 +1223,21 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 
 
-				//[s1.6]不撤单计算时间
+				//[s1.6]not cancel but calc time 
 				targetSeconds = testTime2_l + 15000;
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.6]不撤单计算时间out\n");
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.6]不撤单计算时间 [myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.6]not cancel but calc time out\n");
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s1.6]not cancel but calc time  [myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
 				if (myMilliseconds > targetSeconds - 4000 && myMilliseconds < targetSeconds + 4000)
 				{	
-					LOG4CPLUS_DEBUG_FMT(log_1,"[s1.6]不撤单计算时间in\n");
+					LOG4CPLUS_DEBUG_FMT(log_1,"[s1.6]not cancel but calc time in\n");
 					for(i=0; i<atkorderList.size(); i++){
 
-						//计算最后一张有效单时间
+						//calc last inserted order
 
 						if (i < atkorderList.size()-1)
 						{
 							LOG4CPLUS_DEBUG_FMT(log_1,"atkorderList.size()=%d",atkorderList.size());
-							LOG4CPLUS_DEBUG_FMT(log_1,"[计算最后一张有效单时间] :i < atkorderList.size()+1");
+							LOG4CPLUS_DEBUG_FMT(log_1,"[calc last inserted order] :i < atkorderList.size()+1");
 							if (atkorderList[i]->main.OrderStatus == DING_FTDC_OS_NoTradeQueueing
 								&& atkorderList[i+1]->main.OrderStatus == DING_FTDC_OS_Canceled)
 							{
@@ -1296,12 +1309,12 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 							//if (atkmode != 1) //mode=1 计时状态 //atkmode+++++++20151129 去掉 mode1要点火
 			if(myMilliseconds > testTime2_l)//太早进入容易没有收到输入参数
 			{
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]正式攻击时间out\n");
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time out\n");
 				targetSeconds = attackTime_l + timedeta859; // attackTime_l此值每个循环会被自动刷新
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]正式攻击时间[myMilliseconds] %d [targetSeconds - 4000] %d\n",myMilliseconds,targetSeconds - 4000);
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time [myMilliseconds] %d [targetSeconds - 4000] %d\n",myMilliseconds,targetSeconds - 4000);
 				if (((myMilliseconds > attackTime_l - 4000 && myMilliseconds < attackTime_l + 4000)) || atkmode == 2) //atkmode+++++++20151129
 				{
-					LOG4CPLUS_DEBUG_FMT(log_1,"[s2]正式攻击时间in\n");
+					LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time in\n");
 					strcpy(instId,attackReq.InstrumentID);
 					dir=attackReq.Direction;
 					kpp=attackReq.OffsetFlag;		
@@ -1409,13 +1422,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			}
 
 
-			//[s3]撤单时间
+			//[s3]cancel order time 
 			targetSeconds = attackTime_l + 15000;
-			LOG4CPLUS_DEBUG_FMT(log_1,"[s3]撤单时间out\n");
-			LOG4CPLUS_DEBUG_FMT(log_1,"[s3]撤单时间[myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
+			LOG4CPLUS_DEBUG_FMT(log_1,"[s3]cancel order time out\n");
+			LOG4CPLUS_DEBUG_FMT(log_1,"[s3]cancel order time [myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
 			if (myMilliseconds > targetSeconds - 7000 && myMilliseconds < targetSeconds + 7000)
 			{	
-				LOG4CPLUS_DEBUG_FMT(log_1,"[s3]撤单时间in\n");
+				LOG4CPLUS_DEBUG_FMT(log_1,"[s3]cancel order time in\n");
 				for(i=0; i<atkorderList.size(); i++){					
 					if (atkorderList[i]->main.OrderStatus == DING_FTDC_OS_NoTradeQueueing ||atkorderList[i]->main.OrderStatus==DING_FTDC_OST_Unknown)
 					{

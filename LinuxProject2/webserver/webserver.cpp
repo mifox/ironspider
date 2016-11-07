@@ -169,12 +169,14 @@ webserver::webserver(unsigned int port_to_listen, request_func r) {
 		
 			std::cerr<<""<<std::endl;
 			unsigned ret;
-			//_beginthreadex(0,0,Request,(void*) ptr_s,0,&ret);
-		
-			//pthread_t ThreadTID;  
+#ifdef WIN32
+			_beginthreadex(0,0,Request,(void*) ptr_s,0,&ret);
+#else		
+			pthread_t ThreadTID;  
 
-			//pthread_create(&ThreadTID, NULL, Request, (void*) ptr_s);
-			Request(ptr_s);
+			pthread_create(&ThreadTID, NULL, Request, (void*) ptr_s);
+#endif
+			//Request(ptr_s);
 		}catch(...){
 			std::cerr<<"1111111111"<<std::endl;
 		}

@@ -24,7 +24,7 @@ private:
 	{};
 public:
 	CThostFtdcMdApi * realapi;
-	static CMyMdApi * CreateFtdcTraderApi(const char *pszFlowPath = "");
+	static CMyMdApi * CreateFtdcMdApi(const char *pszFlowPath = "");
 
 
 	/// 是否使用多播方式接收行情

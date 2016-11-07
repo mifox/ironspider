@@ -2,7 +2,7 @@
 #include "string.h"
 
 
-CMyMdApi * CMyMdApi::CreateFtdcTraderApi( const char *pszFlowPath /*= ""*/ )
+CMyMdApi * CMyMdApi::CreateFtdcMdApi(const char *pszFlowPath /*= ""*/)
 {
 	CMyMdApi* temp= new CMyMdApi();	
 	temp->realapi = CThostFtdcMdApi::CreateFtdcMdApi(pszFlowPath);
