@@ -26,6 +26,7 @@ char instIdList[1024 * 128] = "IF1412";
 char testAtkInst[1024] = "IF1412";
 char appId[11];		// 应用单元
 char userId[13];		// 投资者代码
+char investorId[13];		// 投资者代码
 char passwd[13];
 
 char appId2[11];		// 应用单元
@@ -86,6 +87,7 @@ int configFromIniFile()
 
 	readconfig(appId, "BROKER_ID");
 	readconfig(userId, "INVESTOR_ID");
+	readconfig(investorId, "INVESTOR_ID_FEMAS");
 	readconfig(passwd, "PASSWORD");
 
 	readconfig(appId2, "BROKER_ID2");

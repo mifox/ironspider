@@ -1,5 +1,5 @@
 #include "myapi.h"
-
+#include <string.h>
 
 
 CMyTraderApi * CMyTraderApi::CreateFtdcTraderApi( const char *pszFlowPath /*= ""*/ )
@@ -33,6 +33,7 @@ const char * CMyTraderApi::GetTradingDay()
 {
 	return realapi->GetTradingDay();
 }
+
 
 void CMyTraderApi::RegisterFront( char *pszFrontAddress )
 {
@@ -89,6 +90,12 @@ int CMyTraderApi::OpenResponseLog( const char *pszRspLogFileName )
 int CMyTraderApi::ReqUserLogin( CDINGFtdcReqUserLoginField *pReqUserLogin, int nRequestID )
 {
 	CUstpFtdcReqUserLoginField* pReqUserLogin0 =(CUstpFtdcReqUserLoginField*) pReqUserLogin;
+// 	CUstpFtdcReqUserLoginField reqUserLogin;
+// 	memset(&reqUserLogin,0,sizeof(CUstpFtdcReqUserLoginField));		
+// 	strcpy(reqUserLogin.BrokerID,pReqUserLogin->BrokerID);
+// 	strcpy(reqUserLogin.UserID, pReqUserLogin->UserID);
+// 	strcpy(reqUserLogin.Password, pReqUserLogin->Password);	
+// 	strcpy(reqUserLogin.UserProductInfo,"xxx111");
 	return realapi->ReqUserLogin(pReqUserLogin0,nRequestID);
 }
 
@@ -113,6 +120,7 @@ int CMyTraderApi::ReqOrderInsert( CDINGFtdcInputOrderField *pInputOrder, int nRe
 int CMyTraderApi::ReqOrderAction( CDINGFtdcOrderActionField *pOrderAction, int nRequestID )
 {
 	CUstpFtdcOrderActionField *pOrderAction0 = (CUstpFtdcOrderActionField *)pOrderAction;
+	pOrderAction0->ActionFlag = USTP_FTDC_AF_Delete;
 	return realapi->ReqOrderAction(pOrderAction0,nRequestID);
 }
 
@@ -204,15 +212,27 @@ CMyTraderSpi::CMyTraderSpi( CDINGFtdcTraderSpi* spi )
 	realspi = spi;
 }
 
+
+void CMyTraderSpi::OnFrontConnected()
+{
+	realspi->OnFrontConnected();
+	//throw std::exception("The method or operation is not implemented.");
+}
 void CMyTraderSpi::OnRspUserLogin( CUstpFtdcRspUserLoginField *pRspUserLogin, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
 {
-	CDINGFtdcRspUserLoginField *pRspUserLogin1 = (CDINGFtdcRspUserLoginField*) pRspUserLogin;
+	CDINGFtdcRspUserLoginField rspUserLogin1 ={0};
+	//CDINGFtdcRspUserLoginField *pRspUserLogin1 = (CDINGFtdcRspUserLoginField*) pRspUserLogin;
 	CDINGFtdcRspInfoField *pRspInfo1 = (CDINGFtdcRspInfoField *)pRspInfo;
-	realspi->OnRspUserLogin(pRspUserLogin1, pRspInfo1, nRequestID,bIsLast );
+	memcpy(&rspUserLogin1,pRspUserLogin,sizeof(CDINGFtdcRspUserLoginField));
+	strcpy(rspUserLogin1.CZCETime,pRspUserLogin->LoginTime);
+	strcpy(rspUserLogin1.SHFETime,pRspUserLogin->LoginTime);
+	strcpy(rspUserLogin1.DCETime,pRspUserLogin->LoginTime);
+	strcpy(rspUserLogin1.FFEXTime,pRspUserLogin->LoginTime);
+	realspi->OnRspUserLogin(&rspUserLogin1, pRspInfo1, nRequestID,bIsLast );
 	return;
 }
 
-void CMyTraderSpi::OnRspUserLogout( CUstpFtdcRspUserLogoutField *pRspUserLogout, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
+void CMyTraderSpi::OnRspUserLogout(CUstpFtdcRspUserLogoutField *pRspUserLogout, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
 	CDINGFtdcRspUserLogoutField *pRspUserLogout1=(CDINGFtdcRspUserLogoutField *)pRspUserLogout;
 	CDINGFtdcRspInfoField* pRspInfo1 =(CDINGFtdcRspInfoField*) pRspInfo;
@@ -256,5 +276,30 @@ void CMyTraderSpi::OnRspQryOrder( CUstpFtdcOrderField *pOrder, CUstpFtdcRspInfoF
 	CDINGFtdcRspInfoField * pRspInfo1= (CDINGFtdcRspInfoField *)pRspInfo;
 	realspi->OnRspQryOrder(pOrder1,pRspInfo1,nRequestID,bIsLast);
 	return;
+}
+
+void CMyTraderSpi::OnPackageStart( int nTopicID, int nSequenceNo )
+{
+	printf("The method or operation is not implemented.\n");
+}
+
+void CMyTraderSpi::OnPackageEnd( int nTopicID, int nSequenceNo )
+{
+	printf("The method or operation is not implemented.\n");
+}
+
+void CMyTraderSpi::OnErrRtnOrderInsert( CUstpFtdcInputOrderField *pInputOrder, CUstpFtdcRspInfoField *pRspInfo )
+{
+	CDINGFtdcInputOrderField  * pOrder1=(CDINGFtdcInputOrderField  *)pInputOrder;
+	CDINGFtdcRspInfoField * pRspInfo1= (CDINGFtdcRspInfoField *)pRspInfo;
+	realspi->OnErrRtnOrderInsert(pOrder1,pRspInfo1);
+	//throw std::exception("The method or operation is not implemented.");
+}
+
+void CMyTraderSpi::OnRspQryInstrument( CUstpFtdcRspInstrumentField *pRspInstrument, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
+{
+	CDINGFtdcRspInfoField * pRspInfo1= (CDINGFtdcRspInfoField *)pRspInfo;
+	CDINGFtdcRspInstrumentField *pRspInstrument1 = (CDINGFtdcRspInstrumentField *)pRspInstrument;
+	realspi->OnRspQryInstrument(pRspInstrument1,pRspInfo1, nRequestID, bIsLast);
 }
 

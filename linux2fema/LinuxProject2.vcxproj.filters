@@ -186,6 +186,9 @@
     <None Include="..\LinuxProject2\zthread\src\Makefile.in">
       <Filter>Source files\Zhread</Filter>
     </None>
+    <None Include="..\win32fema\config.ini">
+      <Filter>Source files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\LinuxProject2\PathHelper.h">

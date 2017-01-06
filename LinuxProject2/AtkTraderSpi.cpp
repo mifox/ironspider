@@ -89,9 +89,13 @@ void AtkCTraderSpi::OnRspUserLogin(CDINGFtdcRspUserLoginField *pRspUserLogin, CD
     sprintf(orderRef,"%d",g_nOrdLocalID);
  	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
  	LOG4CPLUS_DEBUG_FMT(log_1,"登录成功，最大本地报单号:%d\n",g_nOrdLocalID);
-	this->pCar->sendSignal(EVENT_TD_LOGIN);
- 	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+	
+ 	LOG4CPLUS_DEBUG_FMT(log_1,"pRspUserLogin->DCETime:%s\n",pRspUserLogin->DCETime);
+	LOG4CPLUS_DEBUG_FMT(log_1,"pRspUserLogin->CZCETime:%s\n",pRspUserLogin->CZCETime);
+	LOG4CPLUS_DEBUG_FMT(log_1,"pRspUserLogin->SHFETime:%s\n",pRspUserLogin->SHFETime);
+	LOG4CPLUS_DEBUG_FMT(log_1,"pRspUserLogin->FFEXTime:%s\n",pRspUserLogin->FFEXTime);
 	memcpy(&rspUserLogin,pRspUserLogin,sizeof(CDINGFtdcRspUserLoginField));
+	this->pCar->sendSignal(EVENT_TD_LOGIN);
  	//StartAutoOrder();
 }
 
@@ -339,7 +343,7 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 					//Mycerr<<LIMIT_PRICE;
 					CDINGFtdcInputOrderField inputOrder;
 					//this->m_pUserApi.ReqOrderInsert();
-					ReqOrderInsertReady(instId,dir,kpp,price,vol,inputOrder);
+					ReqOrderInsertReady(instId,dir,kpp,price,vol,pOrder->ExchangeID,inputOrder);
 					m_pUserApi->ReqOrderInsert(&inputOrder,nRequestID++);
 
 
@@ -356,7 +360,7 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 					//ReqOrderInsert(instId,dir,kpp,price,vol);
 					CDINGFtdcInputOrderField inputOrder;
 					//this->m_pUserApi.ReqOrderInsert();
-					ReqOrderInsertReady(instId,dir,kpp,price,vol,inputOrder);
+					ReqOrderInsertReady(instId,dir,kpp,price,vol,pOrder->ExchangeID,inputOrder);
 					m_pUserApi->ReqOrderInsert(&inputOrder,nRequestID++);
 					//Mycerr<<"OnRtnTrade"<<curentI++<<"--########################------------"<<endl;
 				}
@@ -889,14 +893,16 @@ void AtkCTraderSpi::OnRtnInvestorAccountDeposit(CDINGFtdcInvestorAccountDepositR
 
 }
 
-void AtkCTraderSpi::ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDINGFtdcDirectionType dir, TDINGFtdcOffsetFlagType kpp, TDINGFtdcPriceType price, TDINGFtdcVolumeType vol, CDINGFtdcInputOrderField& req )
+void AtkCTraderSpi::ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDINGFtdcDirectionType dir, TDINGFtdcOffsetFlagType kpp, TDINGFtdcPriceType price, TDINGFtdcVolumeType vol,TDINGFtdcExchangeIDType exchangeID, CDINGFtdcInputOrderField& req )
 {
 	strcpy(req.BrokerID, appId);  //应用单元代码	
-	strcpy(req.InvestorID, userId); //投资者代码	
+	strcpy(req.UserID, userId); //投资者代码
+    strcpy(req.InvestorID, investorId); //投资者代码
 	strcpy(req.InstrumentID, instId); //合约代码	
 	strcpy(req.UserOrderLocalID, orderRef);  //报单引用
+	strcpy(req.ExchangeID, exchangeID);  //报单引用
 	int nextOrderRef = atoi(orderRef);
-	sprintf(orderRef, "%d", ++nextOrderRef);
+	sprintf(orderRef, "%012d", ++nextOrderRef);
 
 	req.LimitPrice = price;	//价格
 
@@ -914,4 +920,14 @@ void AtkCTraderSpi::ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDING
 	req.ForceCloseReason = DING_FTDC_FCR_NotForceClose;	//强平原因:非强平	
 	req.IsAutoSuspend = 0;  //自动挂起标志:否	
 	//throw std::exception("The method or operation is not implemented.");
+}
+
+void AtkCTraderSpi::OnRspError( CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
+{
+	printf("The method or operation is not implemented.");
+}
+
+void AtkCTraderSpi::OnFrontDisconnected( int nReason )
+{
+	printf("The method or operation is not implemented.");
 }

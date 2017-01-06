@@ -9,6 +9,8 @@ public:
 	CDINGFtdcTraderSpi * realspi;
 	CMyTraderSpi(CDINGFtdcTraderSpi* spi);
 
+	virtual void OnFrontConnected();
+
 	virtual void OnRspUserLogin( CUstpFtdcRspUserLoginField *pRspUserLogin, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast );
 
 	virtual void OnRspUserLogout( CUstpFtdcRspUserLogoutField *pRspUserLogout, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast );
@@ -22,6 +24,14 @@ public:
 	virtual void OnRtnOrder( CUstpFtdcOrderField *pOrder );
 
 	virtual void OnRspQryOrder( CUstpFtdcOrderField *pOrder, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast );
+
+	virtual void OnPackageStart( int nTopicID, int nSequenceNo );
+
+	virtual void OnPackageEnd( int nTopicID, int nSequenceNo );
+
+	virtual void OnErrRtnOrderInsert( CUstpFtdcInputOrderField *pInputOrder, CUstpFtdcRspInfoField *pRspInfo );
+
+	virtual void OnRspQryInstrument( CUstpFtdcRspInstrumentField *pRspInstrument, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast );
 
 
 

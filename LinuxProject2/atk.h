@@ -10,6 +10,8 @@ public:
 	static int getAtkInputOrder(char* s,CDINGFtdcInputOrderField& m);
 	static CtpAtkMd* CreateAtkApi();
 	static int TimeConfirm();
+	static int getexchId( int atkexchange,TDINGFtdcExchangeIDType exchageID);
+	static TDINGFtdcExchangeIDType exchageID;
 	//static void ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDINGFtdcDirectionType dir, TDINGFtdcOffsetFlagType kpp, TDINGFtdcPriceType price, TDINGFtdcVolumeType vol, CDINGFtdcInputOrderField& req );
 };
 

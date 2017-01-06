@@ -53,11 +53,14 @@ public:
 	///投资者保证金率查询应答
 	virtual void OnRspQryInvestorMargin(CDINGFtdcInvestorMarginField *pInvestorMargin, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 
-	virtual void ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDINGFtdcDirectionType dir, TDINGFtdcOffsetFlagType kpp, TDINGFtdcPriceType price, TDINGFtdcVolumeType vol, CDINGFtdcInputOrderField& req );
+	virtual void ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDINGFtdcDirectionType dir, TDINGFtdcOffsetFlagType kpp, TDINGFtdcPriceType price, TDINGFtdcVolumeType vol,TDINGFtdcExchangeIDType	exchangeID, CDINGFtdcInputOrderField& req );
 
 	void Show(CDINGFtdcOrderField *pOrder);
 	void Show(CDINGFtdcTradeField *pTrade);
 	void Show(CDINGFtdcRspInstrumentField *pRspInstrument);
+
+	virtual void OnRspError( CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast );
+	virtual void OnFrontDisconnected( int nReason );
 	CDINGFtdcRspUserLoginField rspUserLogin;
 	//void ReqUserLogin()
 private:

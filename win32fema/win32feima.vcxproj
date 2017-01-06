@@ -109,6 +109,7 @@
     <None Include="..\LinuxProject2\zthread\src\Makefile.in">
       <FileType>Document</FileType>
     </None>
+    <None Include="config.ini" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3E96815F-CA6C-4C23-A69D-A4D151F2BE6A}</ProjectGuid>

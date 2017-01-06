@@ -117,6 +117,9 @@
     <None Include="..\LinuxProject2\zthread\src\Makefile.in">
       <FileType>Document</FileType>
     </None>
+    <None Include="..\win32fema\config.ini">
+      <FileType>Document</FileType>
+    </None>
     <None Include="debug.mak" />
     <None Include="LinuxProject2-Debug.vgdbsettings" />
     <None Include="LinuxProject2-Release.vgdbsettings" />

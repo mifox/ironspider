@@ -78,7 +78,7 @@ void CMdSpi::SubscribeMarketData(char* instIdList)
 }
 void CMdSpi::OnFrontDisconnected( int nReason )
 {
-
+	printf("test");
 }
 
 void CMdSpi::OnHeartBeatWarning( int nTimeLapse )
@@ -129,7 +129,7 @@ void CMdSpi::OnRtnDepthMarketData( CDINGFtdcDepthMarketDataField *pDepthMarketDa
 
 void CMdSpi::OnRspSubMarketData( CDINGFtdcSpecificInstrumentField *pSpecificInstrument, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
 {
-
+	printf("test\n");
 }
 
 void CMdSpi::OnRspUnSubMarketData( CDINGFtdcSpecificInstrumentField *pSpecificInstrument, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )

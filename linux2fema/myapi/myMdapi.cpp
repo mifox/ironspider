@@ -3,7 +3,7 @@
 
 
 
-CMyMdApi * CMyMdApi::CreateFtdcTraderApi( const char *pszFlowPath /*= ""*/ )
+CMyMdApi * CMyMdApi::CreateFtdcMdApi( const char *pszFlowPath /*= ""*/ )
 {
 	CMyMdApi* temp= new CMyMdApi();
 	temp->realapi = CUstpFtdcMduserApi::CreateFtdcMduserApi(pszFlowPath);
@@ -37,6 +37,7 @@ const char * CMyMdApi::GetTradingDay()
 
 void CMyMdApi::RegisterFront( char *pszFrontAddress )
 {
+
 	realapi->RegisterFront(pszFrontAddress);
 }
 

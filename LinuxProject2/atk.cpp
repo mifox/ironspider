@@ -133,9 +133,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 	g_puserMdapi=pMd;
 	CMdSpi spiMd((CMyMdApi *)pMd);
+	pMd->SubscribeMarketDataTopic(100, DING_TERT_QUICK);
+	pMd->SubscribeMarketDataTopic(21001, DING_TERT_QUICK);
  	pMd->RegisterFront(mdFront);
 	CMyMdSpi* pMdSpi = new CMyMdSpi((CDINGFtdcMduserSpi*)&spiMd);
  	pMd->RegisterSpi(pMdSpi);
+
+	
 	pMd->Init();	
 	//pMd->Join();
 
@@ -168,7 +172,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	pTrader->Init();
 	CDINGFtdcInputOrderField attackReq={0};
 	//----1.0----登录计时
-	for (int i=1;i<25;i++)
+	for (int i=1;i<31;i++)
 	{
 		loginedTimes=i;
 		//pTdSpi->ReqUserLogin(appId,userId,passwd);
@@ -199,6 +203,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 		car->waitForState(10000 ,EVENT_TD_LOGIN);
 		time(&timep); /*获取time_t类型的当前时间*/
 		memcpy(&b,getTimeInfo(),sizeof(tm));
+		LOG4CPLUS_DEBUG_FMT(log_1,"b.tm_min,b.tm_sec %d =%d\n",b.tm_min,b.tm_sec);
 		localend.push_back(b);//登陆后
 
 		//GetLocalTime(&sys);
@@ -246,7 +251,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 		long long myMillisecondsnow = sys.seconds*1000;
 		long long targetAcc = ((8*60+50)*60)*1000;
 		printf("%d\n",myMillisecondsnow);
-		int logginWaitTime=20333;
+		int logginWaitTime=20133;
 		if (myMillisecondsnow > targetAcc)
 		{
 			logginWaitTime =1333;
@@ -305,12 +310,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			printf("check failed\n");
 			common_params_maps["closepricecheck"]="check failure!!!";
 		}
-		car->waitForState(10000 ,EVENT_TD_LOGOUT);
+		
 		CDINGFtdcReqUserLogoutField reqlogout={0};
 		strcpy(reqlogout.BrokerID,appId);
 		strcpy(reqlogout.UserID	,userId);
 		nRequestID++;
 		ret=pTrader->ReqUserLogout(&reqlogout,nRequestID);
+		car->waitForState(10000 ,EVENT_TD_LOGOUT);
 
 	}
 	car->waitForState(10000,EVENT_TD_CONNECT);
@@ -356,13 +362,16 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	{
 		//printf("%d =%d\n",vTimeCalc[i].deta,vTimeCalc[i].Milliseconds);
 		resultTimeCalc=vTimeCalc[i];
+		
 		if (i<vTimeCalc.size()-1)
 		{
 			if (vTimeCalc[i].detaSecondsFromR2L != vTimeCalc[i+1].detaSecondsFromR2L)
-			{			
+			{
+				resultTimeCalc=vTimeCalc[i+1];
 				break;
 			}
 		}
+		resultTimeCalc.detaSecondsFromR2L -=1; //没有跳跃秒数
 
 	}
 	LOG4CPLUS_DEBUG_FMT(log_1,"[resultTimeCalc] %d = %d\n",resultTimeCalc.detaSecondsFromR2L,resultTimeCalc.Milliseconds);
@@ -385,6 +394,11 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	strcpy(settlementInfoConfirm.BrokerID,appId);
 	strcpy(settlementInfoConfirm.InvestorID,userId);
 	pTrader->ReqSettlementInfoConfirm(&settlementInfoConfirm, nRequestID++);
+// 	Sleep(2000);
+// 	CDINGFtdcQryInstrumentField qryInstrument={0};
+// 	strcpy(qryInstrument.ExchangeID,"SHFE");
+// 	strcpy(qryInstrument.InstrumentID,"rb1701");
+// 	pTrader->ReqQryInstrument(&qryInstrument, nRequestID++);
 
 	//------4------数据准备
 	int breakFlag=0;
@@ -425,7 +439,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	long testTime2_l=0;
 	long attackTime_l=0;
 	map<string,string>::iterator it;
-
+	int a1= pTrader->OpenRequestLog("d:\\1.log");
+	int b1= pTrader->OpenResponseLog("d:\\2.log");
 	while(1)
 		{
 			if (breakFlag==1000)
@@ -597,9 +612,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			{
 				CDINGFtdcInputOrderField req;
 				memset(&req, 0, sizeof(req));	
-				spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,req);
-	            int ret = pTrader->ReqOrderInsert(&req, nRequestID++);
+				//strcpy(req.ExchangeID,"SHFE");
+				getexchId(atkexchange,exchageID);
+				spi.ReqOrderInsertReady("rb1701",'0',kpp,3100,1,exchageID,req);
 				
+
+				int ret = pTrader->ReqOrderInsert(&req, nRequestID++);
+				//pTrader->
 				//pTrader->ReqOrderInsert()
 			}
 
@@ -770,7 +789,10 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 								CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
 								memset(&req,0,sizeof(CDINGFtdcInputOrderField));
-								spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,req);
+								
+								getexchId(atkexchange,exchageID);
+								spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,exchageID,req);
+								
 								//pTdSpi->pUserApi->ReqOrderInsert(req);
 
 								CDINGFtdcOrderFieldEX* reqEx = classMapper::toCDINGFtdcOrderFieldEX2(req);
@@ -806,7 +828,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								{
 								printf("insertOrder------------2\n");
 								}*/
-								Sleep(32);
+								Sleep(64);
 								//printf("insertOrder------------3\n");
 								//printf("insertOrder------------4\n");
 								//printf("insertOrder------------5\n");
@@ -1037,7 +1059,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 							CDINGFtdcOrderActionField orderAction;
 							strcpy(orderAction.BrokerID,appId);
 							strcpy(orderAction.UserOrderLocalID,main->UserOrderLocalID);
-							strcpy(orderAction.InvestorID,userId);
+							strcpy(orderAction.UserID,main->UserID);
+							strcpy(orderAction.InvestorID,main->InvestorID);
 							strcpy(orderAction.InstrumentID,main->InstrumentID);
 							strcpy(orderAction.ExchangeID,main->ExchangeID);
 							strcpy(orderAction.OrderSysID,main->OrderSysID);
@@ -1131,7 +1154,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 							{
 
 								CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
-								spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,req);
+								getexchId(atkexchange,exchageID);
+								spi.ReqOrderInsertReady(instId,dir,kpp,price,attackvol,exchageID,req);
 								//pTdSpi->pUserApi->ReqOrderInsert(req);
 
 								CDINGFtdcOrderFieldEX* reqEx= classMapper::toCDINGFtdcOrderFieldEX2(req);
@@ -1163,9 +1187,9 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								
 								//sleepcpu(cpuSleepCount);
 								int j=0;
-								for (int i=0;i<900;i++)
+								for (int i=0;i<700;i++)
 								{   j=j+1;
-								for(int k=0;k<900;k++)
+								for(int k=0;k<700;k++)
 								{j=j+1-1;}
 								}
 
@@ -1389,13 +1413,14 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 									onRtnOrderLogFlag=1;int j=0;
 									{
 										//sleepcpu(cpuSleepCount);
-										for (int x=0;x<470;x++)
+										for (int x=0;x<300;x++)
 										{   j=j+1;
-											for(int k=0;k<470;k++)
+											for(int k=0;k<300;k++)
 											{j=j+1-1;}
 										}
 										CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
-										spi.ReqOrderInsertReady(instId,dir,kpp,price,attackvol,req);
+										getexchId(atkexchange,exchageID);
+										spi.ReqOrderInsertReady(instId,dir,kpp,price,attackvol,exchageID,req);
 										req.TimeCondition=DING_FTDC_TC_IOC;
 										pTrader->ReqOrderInsert(&req,nRequestID++);
 
@@ -1463,3 +1488,31 @@ int CtpAtkMd::TimeConfirm()
 {
 	return 0;
 }
+
+int CtpAtkMd::getexchId( int atkexchange ,TDINGFtdcExchangeIDType exchageID)
+{
+	//TDINGFtdcExchangeIDType exchangestr;
+	switch(atkexchange)
+	{
+	case 0:
+		strcpy(exchageID,"SHFE");
+		break;
+	case 1:
+		strcpy(exchageID,"ZCE");
+		break;
+	case 2:
+		strcpy(exchageID,"DCE");
+		break;
+	case 3:
+		strcpy(exchageID,"CFFEX");
+		break;
+	default:
+		strcpy(exchageID,"");
+
+	}
+	return 1;
+	//throw std::exception("The method or operation is not implemented.");
+}
+
+TDINGFtdcExchangeIDType CtpAtkMd::exchageID;
+

@@ -55,7 +55,8 @@ extern char rollInstrumentID [];
 
 
 extern char appId [];		// 应用单元
-extern char userId [];		// 投资者代码
+extern char userId [];		// 用户名
+extern char investorId [];	// 投资者代码
 extern char passwd [];
 
 extern char appId2 [];		// 应用单元2
