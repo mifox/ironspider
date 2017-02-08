@@ -112,6 +112,14 @@ int main(int argc, char* argv[])
 		usage(argv[0]);
 		return -1;
 	}
+	else
+	{
+		if (!strcmp(argv[1],"--closetoday"))
+		{
+			functionNO = FUNCTION_CLOSETODAY;
+			LOG4CPLUS_DEBUG_FMT(log_1,"functionNO %d",functionNO);
+		}
+	}
 	//web server start
 // 	ConfigureFileTest();
  	webthreadTest();

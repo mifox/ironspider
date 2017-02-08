@@ -172,7 +172,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	pTrader->Init();
 	CDINGFtdcInputOrderField attackReq={0};
 	//----1.0----µÇÂ¼¼ÆÊ±
-	for (int i=1;i<31;i++)
+	for (int i=1;i<3;i++)
 	{
 		loginedTimes=i;
 		//pTdSpi->ReqUserLogin(appId,userId,passwd);
@@ -504,7 +504,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				test_attackReq.LimitPrice =1;
 			}
 
-			CDINGFtdcInputOrderField attackReq={0};
+			/*CDINGFtdcInputOrderField attackReq={0};*/
 			it=common_params_maps.find("instrument1");
 			if (it!=common_params_maps.end())
 			{
@@ -565,8 +565,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			}
 			//common_params_maps["closepricecheck"]="<a herf=setAttckInstrument.html>check</a>";
 
-			attackReq.Volume = 1;
-			attackReq.OffsetFlag='0';
+ 			//test_attackReq.Volume = 1;
+ 			//test_attackReq.OffsetFlag='0';
 			LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM %s",exchangeM);
 			LOG4CPLUS_DEBUG_FMT(log_1,"%s ,%c ,%c ,%f ,%d\n",test_attackReq.InstrumentID,test_attackReq.Direction
 				,test_attackReq.OffsetFlag,test_attackReq.LimitPrice,test_attackReq.Volume);
@@ -1155,7 +1155,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 								CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
 								getexchId(atkexchange,exchageID);
-								spi.ReqOrderInsertReady(instId,dir,kpp,price,attackvol,exchageID,req);
+								spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,exchageID,req);
 								//pTdSpi->pUserApi->ReqOrderInsert(req);
 
 								CDINGFtdcOrderFieldEX* reqEx= classMapper::toCDINGFtdcOrderFieldEX2(req);
@@ -1359,11 +1359,11 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 						//printf("[sys.wMilliseconds2]:%u\n",sys.wMilliseconds);
 						//LOG4CPLUS_DEBUG_FMT(log_1, "%d/%d/%d %d:%d:%d.%u ",sys.wYear,sys.wMonth,sys.wDay,sys.wHour,sys.wMinute,sys.wSecond,sys.wMilliseconds);
 						//printf("[P]%d = %d\n",-resultTimeCalc.deta,-resultTimeCalc.Milliseconds);
-						long myMillisecondsMS = (sys.seconds)*1000+sys.wMilliseconds;
+						//long myMillisecondsMS = (sys.seconds)*1000+sys.wMilliseconds;
 						myMilliseconds = (sys.seconds-resultTimeCalc.detaSecondsFromR2L)*1000+sys.wMilliseconds-resultTimeCalc.Milliseconds;
 						if (0&&mark == 0)
 						{
-							LOG4CPLUS_DEBUG_FMT(log_1,"[myMilliseconds]:%u\n",myMillisecondsMS);
+							//LOG4CPLUS_DEBUG_FMT(log_1,"[myMilliseconds]:%u\n",myMillisecondsMS);
 							LOG4CPLUS_DEBUG_FMT(log_1,"[myMilliseconds]:%u\n",myMilliseconds);
 							printf("[myMilliseconds2]:%u\n",myMilliseconds);
 						}
@@ -1379,7 +1379,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 // 							LOG4CPLUS_DEBUG_FMT(log_1,"Sleep(30000);------------1\n");
 // 							Sleep(30000);
 // 						}
-						if (myMillisecondsMS > targetSeconds + 10000)
+						if (myMilliseconds > targetSeconds + 10000)
 						{
 							LOG4CPLUS_DEBUG_FMT(log_1,"break------------1\n");
 							break;
@@ -1420,7 +1420,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 										}
 										CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
 										getexchId(atkexchange,exchageID);
-										spi.ReqOrderInsertReady(instId,dir,kpp,price,attackvol,exchageID,req);
+										spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,exchageID,req);
 										req.TimeCondition=DING_FTDC_TC_IOC;
 										pTrader->ReqOrderInsert(&req,nRequestID++);
 
