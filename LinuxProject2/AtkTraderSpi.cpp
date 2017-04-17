@@ -184,8 +184,14 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 			founded=true;    break;
 		}
 	}
-	if(founded) orderList[i]= order;   
+	CDINGFtdcOrderField lastOrderStatus={0};
+	if(founded) 
+	{
+		memcpy(&lastOrderStatus,orderList[i],sizeof(CDINGFtdcOrderField));
+		orderList[i]= order;
+	}   
 	else  orderList.push_back(order);
+
 
 	//atkorderList;
 
@@ -213,32 +219,40 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 	TDINGFtdcPriceType price=0.0;
 	TDINGFtdcVolumeType vol=1;
 
-	map<string,string>::iterator it;
+//	map<string,string>::iterator it;
 	TDINGFtdcInstrumentIDType atkinstrumentID;
-	it=common_params_maps.find("instrument1");
-	if (it!=common_params_maps.end())
-	{
-		strcpy(atkinstrumentID,common_params_maps["instrument1"].data());
-	}
-	it=common_params_maps.find("step1");
-	if (it!=common_params_maps.end())
-	{
-		int atkStep=atof((common_params_maps["step1"]).data());
-		if (atkStep>0)
-		{
-			step = atkStep;
-		}
-	}
-	LOG4CPLUS_DEBUG(log_1,"atkStep"<<step<<endl);
+// 	it=common_params_maps.find("instrument1");
+// 	if (it!=common_params_maps.end())
+// 	{
+// 		strcpy(atkinstrumentID,common_params_maps["instrument1"].data());
+// 	}
+// 	it=common_params_maps.find("step1");
+// 	if (it!=common_params_maps.end())
+// 	{
+// 		int atkStep=atof((common_params_maps["step1"]).data());
+// 		if (atkStep>0)
+// 		{
+// 			step = atkStep;
+// 		}
+// 	}
+// 	LOG4CPLUS_DEBUG(log_1,"atkStep"<<step<<endl);
 	double closeprice=0;
-	it=common_params_maps.find("closeprice1");
-	if (it!=common_params_maps.end())
+
+// 	it=common_params_maps.find("closeprice1");
+// 	if (it!=common_params_maps.end())
+// 	{
+// 		closeprice=atof((common_params_maps["closeprice1"]).data());
+// 
+// 	}
+// 	LOG4CPLUS_DEBUG(log_1,"closeprice1"<<closeprice<<endl);
+	if (founded2)
 	{
-		closeprice=atof((common_params_maps["closeprice1"]).data());
+		closeprice = atkorderList[i]->closeprice;
+		LOG4CPLUS_DEBUG(log_1,"closeprice1"<<closeprice<<endl);
+		strcpy(atkinstrumentID,pOrder->InstrumentID);
 
 	}
-	LOG4CPLUS_DEBUG(log_1,"closeprice1"<<closeprice<<endl);
-
+	
 
 	int findmark = 0;
 	LOG4CPLUS_DEBUG(log_1,"atkinstrumentID"<<atkinstrumentID<<endl);	
@@ -250,32 +264,34 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 	LOG4CPLUS_DEBUG(log_1,"findmark"<<findmark<<endl);	
 	//InitializeCriticalSection(&g_cs);
 	LOG4CPLUS_DEBUG(log_1,"pOrder->OrderStatus"<<pOrder->OrderStatus<<endl);
-	if(pOrder->OrderStatus == DING_FTDC_OS_AllTraded || pOrder->OrderStatus == DING_FTDC_OS_PartTradedNotQueueing
+	if(pOrder->OrderStatus == DING_FTDC_OS_AllTraded || pOrder->OrderStatus == DING_FTDC_OS_PartTradedNotQueueing || pOrder->OrderStatus ==DING_FTDC_OS_Canceled
 		|| pOrder->OrderStatus ==DING_FTDC_OS_PartTradedQueueing)
 	{
 		LOG4CPLUS_DEBUG(log_1,"成交mark"<<endl);		
 		//list<CThostFtdcOrderField*>::iterator pos;
 		//for (pos=l2.begin(); pos!= l2.end(); ++pos)
 		int inTheListFlag=0;
-		for(i=0; i<orderList.size(); i++){
-			//LOG4CPLUS_DEBUG(log_1,"orderList[i]->BrokerOrderSeq"<<orderList[i]->BrokerOrderSeq<<endl);
-			if((orderList[i]->OrderStatus == DING_FTDC_OS_PartTradedQueueing || orderList[i]->OrderStatus == DING_FTDC_OS_NoTradeQueueing) 
-				&& !strcmp(orderList[i]->OrderLocalID, pOrder->OrderLocalID)) 
+		//for(i=0; i<orderList.size(); i++)
+		if(lastOrderStatus.OrderSysID)//非空
+		{
+			//LOG4CPLUS_DEBUG(log_1,"lastOrderStatus.BrokerOrderSeq"<<lastOrderStatus.BrokerOrderSeq<<endl);
+			if(!strcmp(lastOrderStatus.OrderLocalID, pOrder->OrderLocalID)) 
 			{			
 
-				LOG4CPLUS_DEBUG(log_1,"orderList[i]->BrokerOrderSeq"<<orderList[i]->OrderLocalID<<endl);
+				LOG4CPLUS_DEBUG(log_1,"lastOrderStatus.BrokerOrderSeq"<<lastOrderStatus.OrderLocalID<<endl);
 				inTheListFlag=1;
 				//CThostFtdcOrderField* temp=*pos;
-				if (!strcmp(orderList[i]->UserOrderLocalID,pOrder->UserOrderLocalID) && orderList[i]->SessionID==pOrder->SessionID) //相同
+				if (!strcmp(lastOrderStatus.UserOrderLocalID,lastOrderStatus.UserOrderLocalID) && lastOrderStatus.SessionID==pOrder->SessionID) //相同
 				{				
-					CDINGFtdcOrderField *m1=orderList[i];
+					CDINGFtdcOrderField *m1=&lastOrderStatus;
 					CDINGFtdcOrderField *m2=pOrder;
 					LOG4CPLUS_DEBUG(log_1,"今日成交数量"<<m1->VolumeTraded<<endl);
+					LOG4CPLUS_DEBUG(log_1,"今日成交数量"<<m2->VolumeTraded<<endl);
 					if (m1->VolumeTraded < m2->VolumeTraded)
 					{
 						vol=m2->VolumeTraded-m1->VolumeTraded;
 						LOG4CPLUS_DEBUG(log_1,"break"<<endl);
-						break;
+						//break;
 					}
 					else return;
 				}
@@ -300,6 +316,7 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 			if (functionNO != FUNCTION_CLOSETODAY)
 			{
 				//std::cerr<<"组合"<<endl;
+				LOG4CPLUS_DEBUG(log_1,pOrder->OffsetFlag<<"##############"<<endl);
 				if(pOrder->OffsetFlag ==DING_FTDC_OF_Open)
 				{
 					kpp=DING_FTDC_OF_Close;	
@@ -316,6 +333,7 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 				//上期所产品
 
 			{
+				LOG4CPLUS_DEBUG(log_1,pOrder->OffsetFlag<<"FUNCTION_CLOSETODAY ##############"<<endl);
 				//cerr<<"上期所"<<endl;
 				if(pOrder->OffsetFlag ==DING_FTDC_OF_Open)
 				{
@@ -328,13 +346,13 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 
 			}
 
-
+			LOG4CPLUS_DEBUG(log_1,pOrder->Direction<<"pOrder->Direction ##############"<<endl);
 			if(findmark)
 			{
 				//买成
 				if(pOrder->Direction==DING_FTDC_D_Buy)
 				{
-
+					LOG4CPLUS_DEBUG(log_1,"卖委托 "<<endl);
 					//卖委托 
 					strcpy(instId, pOrder->InstrumentID);
 					dir=DING_FTDC_D_Sell;
@@ -351,6 +369,7 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 				//卖成
 				if(pOrder->Direction==DING_FTDC_D_Sell)
 				{
+					LOG4CPLUS_DEBUG(log_1,"买委托 "<<endl);
 					//买平
 					strcpy(instId, pOrder->InstrumentID);
 					dir=DING_FTDC_D_Buy;
