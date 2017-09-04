@@ -65,6 +65,11 @@ int dce_ws_900_855 = -1;//++++
 int cffex_ms_859_855 = -1;
 int cffex_ws_900_859 = -1000;
 int cffex_ws_900_855 = -1;//++++
+
+double	jiangebase854ms=-1;
+double	jiangebase858ms=-1;
+double	jiangebase900ms=-1;
+
 //std::map<std::string, CThostFtdcDepthMarketDataField> map;
 int requestId = 0;
 //CtpTraderMiniSpi* orderMini=NULL;
@@ -112,6 +117,10 @@ int configFromIniFile()
 	char str_cffex_ws_900_859[20];
 	char str_cffex_ws_900_855[20];
 
+	char str_jiangebase854ms[256];
+	char str_jiangebase858ms[256];
+	char str_jiangebase900ms[256];
+
 	char str_attackvol[20];
 	char str_trademini[20];
 	char str_atkexchange[20];
@@ -152,6 +161,14 @@ int configFromIniFile()
 	cffex_ws_900_859 = atoi(str_cffex_ws_900_859);
 	cffex_ws_900_855 = atoi(str_cffex_ws_900_855);//+++++
 	attackvol = atoi(str_attackvol);
+
+	readconfig(str_jiangebase854ms,"jiangebase854ms");
+	readconfig(str_jiangebase858ms,"jiangebase858ms");//+++
+	readconfig(str_jiangebase900ms,"jiangebase900ms");
+
+	jiangebase854ms = atof(str_jiangebase854ms);
+	jiangebase858ms = atof(str_jiangebase858ms);
+	jiangebase900ms = atof(str_jiangebase900ms);
 	if (attackvol == 0)
 	{
 		attackvol = 1;

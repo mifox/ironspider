@@ -217,7 +217,7 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 	TDINGFtdcDirectionType dir;
 	TDINGFtdcOffsetFlagType kpp='1'; 
 	TDINGFtdcPriceType price=0.0;
-	TDINGFtdcVolumeType vol=1;
+	TDINGFtdcVolumeType vol=0;
 
 //	map<string,string>::iterator it;
 	TDINGFtdcInstrumentIDType atkinstrumentID;
@@ -303,7 +303,10 @@ void AtkCTraderSpi::OnRtnOrder(CDINGFtdcOrderField *pOrder)
 			vol=pOrder->VolumeTraded;
 			LOG4CPLUS_DEBUG(log_1,"inTheListFlag==0;|vol:"<<vol<<endl);
 		}
-
+		if (vol == 0)
+		{
+			return;
+		}
 		strcpy(instId, pOrder->InstrumentID);
 
 
@@ -914,6 +917,7 @@ void AtkCTraderSpi::OnRtnInvestorAccountDeposit(CDINGFtdcInvestorAccountDepositR
 
 void AtkCTraderSpi::ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDINGFtdcDirectionType dir, TDINGFtdcOffsetFlagType kpp, TDINGFtdcPriceType price, TDINGFtdcVolumeType vol,TDINGFtdcExchangeIDType exchangeID, CDINGFtdcInputOrderField& req )
 {
+	memset(&req, 0, sizeof(CDINGFtdcInputOrderField));
 	strcpy(req.BrokerID, appId);  //应用单元代码	
 	strcpy(req.UserID, userId); //投资者代码
     strcpy(req.InvestorID, investorId); //投资者代码

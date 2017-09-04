@@ -1135,6 +1135,7 @@ struct CDINGFtdcOrderFieldEX
 {
 	CDINGFtdcOrderField main;
 	std::map<std::string, void *> exmaps;
+	double closeprice;
 };
 
 

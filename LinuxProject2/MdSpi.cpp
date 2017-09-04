@@ -66,7 +66,10 @@ void CMdSpi::SubscribeMarketData(char* instIdList)
 	vector<char*> list;
 	char *token = strtok(instIdList, ",");
 	while( token != NULL ){
-		list.push_back(token); 
+		char * t =new char[10];
+		memset(t,0,10);
+		strcpy(t,token);
+		list.push_back(t); 
 		token = strtok(NULL, ",");
 	}
 	unsigned int len = list.size();

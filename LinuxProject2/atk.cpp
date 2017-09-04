@@ -12,6 +12,7 @@
 #include "MdSpi.h"
 
 
+
 tm * getTimeInfo()
 {
 	time_t rawtime;
@@ -100,7 +101,7 @@ double getdff()
 #endif
 }
 
-__int64 getQuadPart()
+inline __int64 getQuadPart()
 {
 	__int64 ret=0;
 #ifdef WIN32
@@ -120,7 +121,25 @@ __int64 getQuadPart()
 	return ret;
 	//throw std::exception("The method or operation is not implemented.");
 }
+__int64  t1,t2; 
 
+// inline  LONGLONG  GetTimeStampCount()
+// {
+// 
+// 	QueryPerformanceCounter(&li);
+// 	return li.QuadPart;
+// 
+// }
+
+inline int sleepcpu(int count)
+{
+	t2 = t1 = getQuadPart();
+	while(t2 < t1+count)
+	{
+		t2  = getQuadPart();
+	}
+	return 1;
+}
 CtpAtkMd* CtpAtkMd::CreateAtkApi()
 {
 	CountedPtr<Car> car(new Car);
@@ -171,8 +190,10 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	time_t timep;
 	pTrader->Init();
 	CDINGFtdcInputOrderField attackReq={0};
+	CDINGFtdcInputOrderField attackReq2={0};
+	CDINGFtdcInputOrderField attackReq3={0};
 	//----1.0----登录计时
-	for (int i=1;i<3;i++)
+	for (int i=1;i<21;i++)
 	{
 		loginedTimes=i;
 		//pTdSpi->ReqUserLogin(appId,userId,passwd);
@@ -285,6 +306,61 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			attackReq.Volume=atof((common_params_maps["vol1"]).data());
 			attackvol=atof((common_params_maps["vol1"]).data());
 		}
+
+		{
+			//map<string,string>::iterator it;
+			map<string,string>::iterator it=common_params_maps.find("instrument2");
+			if (it!=common_params_maps.end())
+			{
+				strcpy(attackReq2.InstrumentID,common_params_maps["instrument2"].data());
+			}
+
+			it=common_params_maps.find("direction2");
+			if (it!=common_params_maps.end())
+			{
+				attackReq2.Direction=common_params_maps["direction2"].data()[0];
+			}
+
+			it=common_params_maps.find("price2");
+			if (it!=common_params_maps.end())
+			{
+				attackReq2.LimitPrice=atof((common_params_maps["price2"]).data());
+			}
+
+			it=common_params_maps.find("vol2");
+			if (it!=common_params_maps.end())
+			{
+				attackReq2.Volume=atof((common_params_maps["vol2"]).data());
+			}
+
+		}
+		{
+			//map<string,string>::iterator it;
+			map<string,string>::iterator it=common_params_maps.find("instrument3");
+			if (it!=common_params_maps.end())
+			{
+				strcpy(attackReq3.InstrumentID,common_params_maps["instrument3"].data());
+			}
+
+			it=common_params_maps.find("direction3");
+			if (it!=common_params_maps.end())
+			{
+				attackReq3.Direction=common_params_maps["direction3"].data()[0];
+			}
+
+			it=common_params_maps.find("price3");
+			if (it!=common_params_maps.end())
+			{
+				attackReq3.LimitPrice=atof((common_params_maps["price3"]).data());
+			}
+			it=common_params_maps.find("vol3");
+			if (it!=common_params_maps.end())
+			{
+				attackReq3.Volume=atof((common_params_maps["vol3"]).data());
+			}
+		}
+
+		
 		double closeprice=0;
 		it=common_params_maps.find("closeprice1");
 		if (it!=common_params_maps.end())
@@ -292,6 +368,23 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			closeprice=atof((common_params_maps["closeprice1"]).data());
 
 		}
+
+		double closeprice2=0;
+		it=common_params_maps.find("closeprice2");
+		if (it!=common_params_maps.end())
+		{
+			closeprice2=atof((common_params_maps["closeprice2"]).data());
+
+		}
+
+		double closeprice3=0;
+		it=common_params_maps.find("closeprice3");
+		if (it!=common_params_maps.end())
+		{
+			closeprice3=atof((common_params_maps["closeprice3"]).data());
+
+		}
+
 		LOG4CPLUS_DEBUG(log_1,"closeprice1"<<closeprice<<endl);
 		if (attackReq.Direction == DING_FTDC_D_Buy && attackReq.LimitPrice < closeprice)
 		{
@@ -309,6 +402,43 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			LOG4CPLUS_DEBUG(log_1,"check failed"<<closeprice<<endl);
 			printf("check failed\n");
 			common_params_maps["closepricecheck"]="check failure!!!";
+		}
+		LOG4CPLUS_DEBUG(log_1,"closeprice2"<<closeprice2<<endl);
+		if (attackReq2.Direction == DING_FTDC_D_Buy && attackReq2.LimitPrice < closeprice2)
+		{
+			LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice2<<endl);
+			printf("check pass\n");
+			common_params_maps["closepricecheck2"]="check success!!!";
+		}else if (attackReq2.Direction == DING_FTDC_D_Sell && attackReq2.LimitPrice > closeprice2)
+		{
+			LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice2<<endl);
+			printf("check pass\n");
+			common_params_maps["closepricecheck2"]="check success!!!";
+		}
+		else
+		{
+			LOG4CPLUS_DEBUG(log_1,"check failed"<<closeprice2<<endl);
+			printf("check failed\n");
+			common_params_maps["closepricecheck2"]="check failure!!!";
+		}
+
+		LOG4CPLUS_DEBUG(log_1,"closeprice3"<<closeprice3<<endl);
+		if (attackReq3.Direction == DING_FTDC_D_Buy && attackReq3.LimitPrice < closeprice3)
+		{
+			LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice3<<endl);
+			printf("check pass\n");
+			common_params_maps["closepricecheck3"]="check success!!!";
+		}else if (attackReq3.Direction == DING_FTDC_D_Sell && attackReq3.LimitPrice > closeprice3)
+		{
+			LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice3<<endl);
+			printf("check pass\n");
+			common_params_maps["closepricecheck3"]="check success!!!";
+		}
+		else
+		{
+			LOG4CPLUS_DEBUG(log_1,"check failed"<<closeprice3<<endl);
+			printf("check failed\n");
+			common_params_maps["closepricecheck3"]="check failure!!!";
 		}
 		
 		CDINGFtdcReqUserLogoutField reqlogout={0};
@@ -329,7 +459,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 		{
 			remote_i=mktime(&tmCZCE[i]);
 		}
-		else if(tmDCE.size()>1 && atkexchange==2)
+		else if(tmDCE.size()>1 && (atkexchange==2 ||atkexchange==3))
 		{
 			remote_i = mktime(&tmDCE[i]);
 		}
@@ -408,8 +538,12 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	char exchangeM[10]="0";
 	long myMilliseconds=1;
 
-	attackReq.Volume = 1;
+	attackReq.Volume = 0;
 	attackReq.OffsetFlag='0';
+	attackReq2.Volume = 1;
+	attackReq2.OffsetFlag='0';
+	attackReq3.Volume = 1;
+	attackReq3.OffsetFlag='0';
 	LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM %s",exchangeM);
 	
 
@@ -490,7 +624,14 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				else if (strcmp(exchangeM,"2") == 0)
 				{
 					atkexchange=2;
-					LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM DCE");
+					LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM DCEYP");
+					LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM %s",exchangeM);
+
+				}
+				else if (strcmp(exchangeM,"3") == 0)
+				{
+					atkexchange=3;
+					LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM DCEIJ");
 					LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM %s",exchangeM);
 
 				}
@@ -530,6 +671,68 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				attackReq.Volume=atof((common_params_maps["vol1"]).data());
 				attackvol=atof((common_params_maps["vol1"]).data());
 			}
+			if (attackReq.Volume <= 0)
+			{
+
+				if (strlen(attackReq.InstrumentID)>0)
+				{
+					attackReq.Volume = attackvol;
+				}
+				else
+					memcpy(&attackReq,&test_attackReq,sizeof(CDINGFtdcInputOrderField));
+				LOG4CPLUS_DEBUG(log_1,"attackReq"<<attackReq.InstrumentID<<endl);
+			}
+
+			{
+				//map<string,string>::iterator it;
+				map<string,string>::iterator it=common_params_maps.find("instrument2");
+				if (it!=common_params_maps.end())
+				{
+					strcpy(attackReq2.InstrumentID,common_params_maps["instrument2"].data());
+				}
+
+				it=common_params_maps.find("direction2");
+				if (it!=common_params_maps.end())
+				{
+					attackReq2.Direction=common_params_maps["direction2"].data()[0];
+				}
+
+				it=common_params_maps.find("price2");
+				if (it!=common_params_maps.end())
+				{
+					attackReq2.LimitPrice=atof((common_params_maps["price2"]).data());
+				}
+				it=common_params_maps.find("vol2");
+				if (it!=common_params_maps.end())
+				{
+					attackReq2.Volume=atof((common_params_maps["vol2"]).data());
+				}
+			}
+			{
+				//map<string,string>::iterator it;
+				map<string,string>::iterator it=common_params_maps.find("instrument3");
+				if (it!=common_params_maps.end())
+				{
+					strcpy(attackReq3.InstrumentID,common_params_maps["instrument3"].data());
+				}
+
+				it=common_params_maps.find("direction3");
+				if (it!=common_params_maps.end())
+				{
+					attackReq3.Direction=common_params_maps["direction3"].data()[0];
+				}
+
+				it=common_params_maps.find("price3");
+				if (it!=common_params_maps.end())
+				{
+					attackReq3.LimitPrice=atof((common_params_maps["price3"]).data());
+				}
+				it=common_params_maps.find("vol3");
+				if (it!=common_params_maps.end())
+				{
+					attackReq3.Volume=atof((common_params_maps["vol3"]).data());
+				}
+			}
 			double closeprice=0;
 			it=common_params_maps.find("closeprice1");
 			if (it!=common_params_maps.end())
@@ -537,13 +740,25 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				closeprice=atof((common_params_maps["closeprice1"]).data());
 
 			}
-			else
+			
+
+			double closeprice2=0;
+			it=common_params_maps.find("closeprice2");
+			if (it!=common_params_maps.end())
 			{
-				memcpy(&attackReq,&test_attackReq,sizeof(CDINGFtdcInputOrderField));
-				attackvol  = 1;
-				closeprice = test_attackReq.LimitPrice+10;
-				LOG4CPLUS_DEBUG(log_1,"No web input"<<endl);
+				closeprice2=atof((common_params_maps["closeprice2"]).data());
+
 			}
+			
+
+			double closeprice3=0;
+			it=common_params_maps.find("closeprice3");
+			if (it!=common_params_maps.end())
+			{
+				closeprice3=atof((common_params_maps["closeprice3"]).data());
+
+			}
+			
 
 			LOG4CPLUS_DEBUG(log_1,"closeprice1"<<closeprice<<endl);
 			if (attackReq.Direction == DING_FTDC_D_Buy && attackReq.LimitPrice < closeprice)
@@ -563,6 +778,44 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				printf("check failed\n");
 				common_params_maps["closepricecheck"]="check failure!!!";
 			}
+
+			LOG4CPLUS_DEBUG(log_1,"closeprice2"<<closeprice2<<endl);
+			if (attackReq2.Direction == DING_FTDC_D_Buy && attackReq2.LimitPrice < closeprice2)
+			{
+				LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice2<<endl);
+				printf("check pass\n");
+				common_params_maps["closepricecheck2"]="check success!!!";
+			}else if (attackReq2.Direction == DING_FTDC_D_Sell && attackReq2.LimitPrice > closeprice2)
+			{
+				LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice2<<endl);
+				printf("check pass\n");
+				common_params_maps["closepricecheck2"]="check success!!!";
+			}
+			else
+			{
+				LOG4CPLUS_DEBUG(log_1,"check failed"<<closeprice2<<endl);
+				printf("check failed\n");
+				common_params_maps["closepricecheck2"]="check failure!!!";
+			}
+
+			LOG4CPLUS_DEBUG(log_1,"closeprice3"<<closeprice3<<endl);
+			if (attackReq3.Direction == DING_FTDC_D_Buy && attackReq3.LimitPrice < closeprice3)
+			{
+				LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice3<<endl);
+				printf("check pass\n");
+				common_params_maps["closepricecheck3"]="check success!!!";
+			}else if (attackReq3.Direction == DING_FTDC_D_Sell && attackReq3.LimitPrice > closeprice3)
+			{
+				LOG4CPLUS_DEBUG(log_1,"check pass"<<closeprice3<<endl);
+				printf("check pass\n");
+				common_params_maps["closepricecheck3"]="check success!!!";
+			}
+			else
+			{
+				LOG4CPLUS_DEBUG(log_1,"check failed"<<closeprice<<endl);
+				printf("check failed\n");
+				common_params_maps["closepricecheck3"]="check failure!!!";
+			}
 			//common_params_maps["closepricecheck"]="<a herf=setAttckInstrument.html>check</a>";
 
  			//test_attackReq.Volume = 1;
@@ -573,6 +826,10 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 			LOG4CPLUS_DEBUG_FMT(log_1,"%s ,%c ,%c ,%f ,%d\n",attackReq.InstrumentID,attackReq.Direction
 				,attackReq.OffsetFlag,attackReq.LimitPrice,attackReq.Volume);
+			LOG4CPLUS_DEBUG_FMT(log_1,"%s ,%c ,%c ,%f ,%d\n",attackReq2.InstrumentID,attackReq2.Direction
+				,attackReq2.OffsetFlag,attackReq2.LimitPrice,attackReq2.Volume);
+			LOG4CPLUS_DEBUG_FMT(log_1,"%s ,%c ,%c ,%f ,%d\n",attackReq3.InstrumentID,attackReq3.Direction
+				,attackReq3.OffsetFlag,attackReq3.LimitPrice,attackReq3.Volume);
 			TDINGFtdcInstrumentIDType instId={0};
 			TDINGFtdcDirectionType dir;
 			TDINGFtdcOffsetFlagType kpp='0'; 
@@ -606,15 +863,13 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				strcpy(programchoose,(common_params_maps["programchoose"]).data());
 			}
 
-
-
 			if (!strcmp(programchoose,"debug") && price>100)
 			{
 				CDINGFtdcInputOrderField req;
 				memset(&req, 0, sizeof(req));	
 				//strcpy(req.ExchangeID,"SHFE");
 				getexchId(atkexchange,exchageID);
-				spi.ReqOrderInsertReady("rb1701",'0',kpp,3100,1,exchageID,req);
+				spi.ReqOrderInsertReady("rb1701",'0',kpp,3713,1,exchageID,req);
 				
 
 				int ret = pTrader->ReqOrderInsert(&req, nRequestID++);
@@ -634,6 +889,12 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				LOG4CPLUS_DEBUG_FMT(log_1,"testTime_l=%d\n",testTime_l);
 			}
 			else if (atkexchange == 2)//大连商品交易所
+			{
+
+				testTime_l=(long)(good(testAttackTime));
+				LOG4CPLUS_DEBUG_FMT(log_1,"testTime_l=%d\n",testTime_l);
+			}
+			else if (atkexchange == 3)//大连商品交易所
 			{
 
 				testTime_l=(long)(good(testAttackTime));
@@ -708,7 +969,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 					LOG4CPLUS_DEBUG_FMT(log_1,"[diff_900_859]:%lld\n",diff_900_859);
 					LOG4CPLUS_DEBUG_FMT(log_1,"[diff_900_855]:%lld\n",diff_900_855);//++++
 				}
-				else if(atkexchange == 2)//大连商品
+				else if(atkexchange == 2 ||atkexchange == 3)//大连商品
 				{
 					diff_859_855=dff*(4*60) + dff*dce_ms_859_855/1000;
 					diff_900_859=dff*(1*60) + dff*dce_ws_900_859/1000000;
@@ -828,7 +1089,11 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								{
 								printf("insertOrder------------2\n");
 								}*/
-								Sleep(64);
+								if (jiangebase854ms>0.0001)
+								{
+									Sleep(int(jiangebase854ms));
+								}
+								
 								//printf("insertOrder------------3\n");
 								//printf("insertOrder------------4\n");
 								//printf("insertOrder------------5\n");
@@ -1148,9 +1413,9 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 							double dft,dff,dfm;
 							//QueryPerformanceFrequency(&litmp);//获得时钟频率
 							dff=getdff();//(double)litmp.QuadPart;
-							int cpuSleepCount = dff*1/1000;
+							int cpuSleepCount = dff*jiangebase858ms/1000;
 							LOG4CPLUS_DEBUG(log_1,"myMillisecondsMS > targetSeconds------------1\n"<<myMillisecondsMS<<"|"<<targetSeconds<<endl);
-							for(int i=1;i<31;i++)
+							for(int i=1;i<51;i++)
 							{
 
 								CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
@@ -1184,14 +1449,17 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								atkorderList.push_back(reqEx);
 								int ret = pTrader->ReqOrderInsert(&req, nRequestID++);
 								//Sleep(2);
-								
-								//sleepcpu(cpuSleepCount);
-								int j=0;
-								for (int i=0;i<700;i++)
-								{   j=j+1;
-								for(int k=0;k<700;k++)
-								{j=j+1-1;}
+								if (jiangebase858ms>0.0001)
+								{
+									sleepcpu(cpuSleepCount);
 								}
+								
+// 								int j=0;
+// 								for (int i=0;i<700;i++)
+// 								{   j=j+1;
+// 								for(int k=0;k<700;k++)
+// 								{j=j+1-1;}
+// 								}
 
 								/*LOG4CPLUS_DEBUG_FMT(log_1,"insertOrder------------1\n");
 								printf("insertOrder2------------2\n");
@@ -1315,7 +1583,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								//long milliseconds859remote = ((8*60+59)*60+0)*1000+0;
 								long milliseconds859remote = (testTime2_l+800)  /1000 *1000;
 								LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds859remote]:%d\n",milliseconds859remote);
-								timedeta859 = (milliseconds859local - milliseconds859remote-200);
+								timedeta859 = (milliseconds859local - milliseconds859remote);
 								//----精确时方法begin----
 								qpc859=*(__int64*)atkorderList[0]->exmaps["sys_time_qpc"];
 								LOG4CPLUS_DEBUG_FMT(log_1,"[qpc859]:%lld\n",qpc859);
@@ -1334,16 +1602,12 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			if(myMilliseconds > testTime2_l)//太早进入容易没有收到输入参数
 			{
 				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time out\n");
-				targetSeconds = attackTime_l + timedeta859; // attackTime_l此值每个循环会被自动刷新
+				targetSeconds = attackTime_l; // attackTime_l此值每个循环会被自动刷新
 				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time [myMilliseconds] %d [targetSeconds - 4000] %d\n",myMilliseconds,targetSeconds - 4000);
 				if (((myMilliseconds > attackTime_l - 4000 && myMilliseconds < attackTime_l + 4000)) || atkmode == 2) //atkmode+++++++20151129
 				{
 					LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time in\n");
-					strcpy(instId,attackReq.InstrumentID);
-					dir=attackReq.Direction;
-					kpp=attackReq.OffsetFlag;		
-					price=attackReq.LimitPrice;		
-					vol=attackReq.Volume;
+					
 					int mark=0;
 					while(1)
 					{
@@ -1406,35 +1670,103 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								LOG4CPLUS_DEBUG_FMT(log_1,"send signal\n");
 								//SetEvent(attackEvent);
 							}
-							int cpuSleepCount = dff*0.1/1000;
+							int cpuSleepCount = dff*jiangebase900ms/1000;
 							if (atkmode != 1) //+20151126更新分离式进攻点火完成 atkmode ==1 不进攻
-								for(int i=1;i<21;i++)
+								for(int i=1;i<6;i++)
 								{
 									onRtnOrderLogFlag=1;int j=0;
 									{
-										//sleepcpu(cpuSleepCount);
-										for (int x=0;x<300;x++)
-										{   j=j+1;
-											for(int k=0;k<300;k++)
-											{j=j+1-1;}
-										}
-										CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
-										getexchId(atkexchange,exchageID);
-										spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,exchageID,req);
-										req.TimeCondition=DING_FTDC_TC_IOC;
-										pTrader->ReqOrderInsert(&req,nRequestID++);
+										{
+											LOG4CPLUS_DEBUG(log_1,"attackReq["<<attackReq.InstrumentID
+												<<attackReq.Direction
+												<<attackReq.Volume
+												<<attackReq.LimitPrice												
+												<<endl);
+											strcpy(instId,attackReq.InstrumentID);
+											dir=attackReq.Direction;
+											kpp=attackReq.OffsetFlag;		
+											price=attackReq.LimitPrice;		
+											vol=attackReq.Volume;
+											if(jiangebase900ms >0.0001)										
+											{
+												sleepcpu(cpuSleepCount);
+											}
+											CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
+											getexchId(atkexchange,exchageID);
+											spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,exchageID,req);
+											req.TimeCondition=DING_FTDC_TC_IOC;
+											pTrader->ReqOrderInsert(&req,nRequestID++);
 
-										CDINGFtdcOrderFieldEX* reqEx= classMapper::toCDINGFtdcOrderFieldEX2(req);
-										reqEx->exmaps["test"]=(void *) new string("test");
-										reqEx->exmaps["seq"]=(void *) new int(i); //顺序
+											CDINGFtdcOrderFieldEX* reqEx= classMapper::toCDINGFtdcOrderFieldEX2(req);
+											reqEx->exmaps["test"]=(void *) new string("test");
+											reqEx->exmaps["seq"]=(void *) new int(i); //顺序
+											reqEx->closeprice = closeprice;
 										
-										Tmm* point_sys=(new Tmm);
-										point_sys->seconds = getTimeInfotimeT();
-										point_sys->wMilliseconds = GetCurrentTimeMsec();
+											Tmm* point_sys=(new Tmm);
+											point_sys->seconds = getTimeInfotimeT();
+											point_sys->wMilliseconds = GetCurrentTimeMsec();
 									
-										reqEx->exmaps["sys_time"]=(void *) point_sys; //sys_time
-										atkorderList.push_back(reqEx);
-									
+											reqEx->exmaps["sys_time"]=(void *) point_sys; //sys_time
+											atkorderList.push_back(reqEx);
+										}
+										if(attackReq2.Volume)
+										{
+											strcpy(instId,attackReq2.InstrumentID);
+											dir=attackReq2.Direction;
+											kpp=attackReq2.OffsetFlag;		
+											price=attackReq2.LimitPrice;		
+											vol=attackReq2.Volume;
+											if(jiangebase900ms>jiangebase900ms >0.0001)										
+											{
+												sleepcpu(cpuSleepCount);
+											}
+											CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
+											getexchId(atkexchange,exchageID);
+											spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,exchageID,req);
+											req.TimeCondition=DING_FTDC_TC_IOC;
+											pTrader->ReqOrderInsert(&req,nRequestID++);
+
+											CDINGFtdcOrderFieldEX* reqEx= classMapper::toCDINGFtdcOrderFieldEX2(req);
+											reqEx->exmaps["test"]=(void *) new string("test");
+											reqEx->exmaps["seq"]=(void *) new int(i); //顺序
+											reqEx->closeprice = closeprice2;
+
+											Tmm* point_sys=(new Tmm);
+											point_sys->seconds = getTimeInfotimeT();
+											point_sys->wMilliseconds = GetCurrentTimeMsec();
+
+											reqEx->exmaps["sys_time"]=(void *) point_sys; //sys_time
+											atkorderList.push_back(reqEx);
+										}
+										if(attackReq3.Volume)
+										{
+											strcpy(instId,attackReq3.InstrumentID);
+											dir=attackReq3.Direction;
+											kpp=attackReq3.OffsetFlag;		
+											price=attackReq3.LimitPrice;		
+											vol=attackReq3.Volume;
+											if(jiangebase900ms >0.0001)										
+											{
+												sleepcpu(cpuSleepCount);
+											}
+											CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
+											getexchId(atkexchange,exchageID);
+											spi.ReqOrderInsertReady(instId,dir,kpp,price,vol,exchageID,req);
+											req.TimeCondition=DING_FTDC_TC_IOC;
+											pTrader->ReqOrderInsert(&req,nRequestID++);
+
+											CDINGFtdcOrderFieldEX* reqEx= classMapper::toCDINGFtdcOrderFieldEX2(req);
+											reqEx->exmaps["test"]=(void *) new string("test");
+											reqEx->exmaps["seq"]=(void *) new int(i); //顺序
+											reqEx->closeprice = closeprice3;
+
+											Tmm* point_sys=(new Tmm);
+											point_sys->seconds = getTimeInfotimeT();
+											point_sys->wMilliseconds = GetCurrentTimeMsec();
+
+											reqEx->exmaps["sys_time"]=(void *) point_sys; //sys_time
+											atkorderList.push_back(reqEx);
+										}
 									}									
 
 								}

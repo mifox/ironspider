@@ -103,6 +103,10 @@ extern int cffex_ms_859_855;
 extern int cffex_ws_900_859;
 extern int cffex_ws_900_855;
 
+extern double	jiangebase854ms;
+extern double	jiangebase858ms;
+extern double	jiangebase900ms;
+
 extern int attackvol;
 extern std::map<std::string, CDINGFtdcDepthMarketDataField> mapMd; 
 extern int  onRtnOrderLogFlag;//不主动处理回报
