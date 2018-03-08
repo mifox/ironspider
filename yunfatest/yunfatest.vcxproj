@@ -59,6 +59,7 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Linux2ctp\src\simple_test.cc" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="yunfatest.cpp" />

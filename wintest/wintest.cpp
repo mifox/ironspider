@@ -96,7 +96,7 @@ public:
 
 #include <time.h>
  
-int main()
+int main1()
  {
      time_t timep;
     

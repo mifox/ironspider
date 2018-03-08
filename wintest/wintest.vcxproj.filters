@@ -182,5 +182,11 @@
     <ClCompile Include="Profiler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\Linux2ctp\src\simple_test.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linux2ctp\src\windows\port.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

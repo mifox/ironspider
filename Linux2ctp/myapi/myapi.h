@@ -1,4 +1,11 @@
-#include "../ctpapi/ThostFtdcTraderApi.h"
+#ifndef ctpzctp
+	#include "../ctpapi/ThostFtdcTraderApi.h"
+#endif
+
+#ifdef ctpzctp
+	#include "../ctpapizctp/ThostFtdcTraderApi.h"
+#endif
+
 #include "../../LinuxProject2/myinclude/DINGFtdcTraderApi.h"
 #ifndef MY_API_H_
 #define MY_API_H_
@@ -31,6 +38,17 @@ public:
 	 virtual void OnRtnOrder( CThostFtdcOrderField *pOrder );
 
 	 virtual void OnRtnTrade( CThostFtdcTradeField *pTrade );
+
+	 ///请求查询合约响应
+	 virtual void OnRspQryInstrument(CThostFtdcInstrumentField *pInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
+
+	 ///请求查询资金账户响应
+	 virtual void OnRspQryTradingAccount(CThostFtdcTradingAccountField *pTradingAccount, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
+
+	 virtual void OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField *pInstrumentMarginRate, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
+
+	 virtual void OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInvestorPosition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) ;
+
 
 private:
 	CThostFtdcTraderApi* pUserApi;

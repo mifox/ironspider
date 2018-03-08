@@ -6160,8 +6160,6 @@ struct CThostFtdcReqOpenAccountField
 	TThostFtdcTIDType	TID;
 	///用户标识
 	TThostFtdcUserIDType	UserID;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///转帐销户请求
@@ -6255,8 +6253,6 @@ struct CThostFtdcReqCancelAccountField
 	TThostFtdcTIDType	TID;
 	///用户标识
 	TThostFtdcUserIDType	UserID;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///变更银行账户请求
@@ -6342,8 +6338,6 @@ struct CThostFtdcReqChangeAccountField
 	TThostFtdcTIDType	TID;
 	///摘要
 	TThostFtdcDigestType	Digest;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///转账请求
@@ -6435,8 +6429,6 @@ struct CThostFtdcReqTransferField
 	TThostFtdcTIDType	TID;
 	///转账交易状态
 	TThostFtdcTransferStatusType	TransferStatus;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///银行发起银行资金转期货响应
@@ -6532,8 +6524,6 @@ struct CThostFtdcRspTransferField
 	TThostFtdcErrorIDType	ErrorID;
 	///错误信息
 	TThostFtdcErrorMsgType	ErrorMsg;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///冲正请求
@@ -6639,8 +6629,6 @@ struct CThostFtdcReqRepealField
 	TThostFtdcTIDType	TID;
 	///转账交易状态
 	TThostFtdcTransferStatusType	TransferStatus;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///冲正响应
@@ -6750,8 +6738,6 @@ struct CThostFtdcRspRepealField
 	TThostFtdcErrorIDType	ErrorID;
 	///错误信息
 	TThostFtdcErrorMsgType	ErrorMsg;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///查询账户信息请求
@@ -6829,8 +6815,6 @@ struct CThostFtdcReqQueryAccountField
 	TThostFtdcRequestIDType	RequestID;
 	///交易ID
 	TThostFtdcTIDType	TID;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///查询账户信息响应
@@ -6912,8 +6896,6 @@ struct CThostFtdcRspQueryAccountField
 	TThostFtdcTradeAmountType	BankUseAmount;
 	///银行可取金额
 	TThostFtdcTradeAmountType	BankFetchAmount;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///期商签到签退
@@ -7171,8 +7153,6 @@ struct CThostFtdcReqQueryTradeResultBySerialField
 	TThostFtdcTradeAmountType	TradeAmount;
 	///摘要
 	TThostFtdcDigestType	Digest;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///查询指定流水号的交易结果响应
@@ -7328,8 +7308,6 @@ struct CThostFtdcVerifyCustInfoField
 	TThostFtdcIdentifiedCardNoType	IdentifiedCardNo;
 	///客户类型
 	TThostFtdcCustTypeType	CustType;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///验证期货资金密码和客户信息
@@ -7349,8 +7327,6 @@ struct CThostFtdcVerifyFuturePasswordAndCustInfoField
 	TThostFtdcPasswordType	Password;
 	///币种代码
 	TThostFtdcCurrencyIDType	CurrencyID;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///验证期货资金密码和客户信息
@@ -7549,8 +7525,6 @@ struct CThostFtdcNotifyQueryAccountField
 	TThostFtdcErrorIDType	ErrorID;
 	///错误信息
 	TThostFtdcErrorMsgType	ErrorMsg;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///银期转账交易流水表
@@ -7834,8 +7808,6 @@ struct CThostFtdcAccountregisterField
 	TThostFtdcCustTypeType	CustType;
 	///银行帐号类型
 	TThostFtdcBankAccTypeType	BankAccType;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///银期开户信息
@@ -7933,8 +7905,6 @@ struct CThostFtdcOpenAccountField
 	TThostFtdcErrorIDType	ErrorID;
 	///错误信息
 	TThostFtdcErrorMsgType	ErrorMsg;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///银期销户信息
@@ -8032,8 +8002,6 @@ struct CThostFtdcCancelAccountField
 	TThostFtdcErrorIDType	ErrorID;
 	///错误信息
 	TThostFtdcErrorMsgType	ErrorMsg;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///银期变更银行账号信息
@@ -8123,8 +8091,6 @@ struct CThostFtdcChangeAccountField
 	TThostFtdcErrorIDType	ErrorID;
 	///错误信息
 	TThostFtdcErrorMsgType	ErrorMsg;
-	///长客户姓名
-	TThostFtdcLongIndividualNameType	LongCustomerName;
 };
 
 ///二级代理操作员银期权限
@@ -8280,7 +8246,7 @@ struct CThostFtdcReserveOpenAccountConfirmField
 	///会话号
 	TThostFtdcSessionIDType	SessionID;
 	///客户姓名
-	TThostFtdcLongIndividualNameType	CustomerName;
+	TThostFtdcIndividualNameType	CustomerName;
 	///证件类型
 	TThostFtdcIdCardTypeType	IdCardType;
 	///证件号码
@@ -8367,7 +8333,7 @@ struct CThostFtdcReserveOpenAccountField
 	///会话号
 	TThostFtdcSessionIDType	SessionID;
 	///客户姓名
-	TThostFtdcLongIndividualNameType	CustomerName;
+	TThostFtdcIndividualNameType	CustomerName;
 	///证件类型
 	TThostFtdcIdCardTypeType	IdCardType;
 	///证件号码
@@ -8418,6 +8384,19 @@ struct CThostFtdcReserveOpenAccountField
 	TThostFtdcErrorMsgType	ErrorMsg;
 };
 
-
+///分价表
+struct CThostFtdcMBLMarketDataField
+{
+	///合约代码
+	TThostFtdcInstrumentIDType	InstrumentID;
+	///交易所代码
+	TThostFtdcExchangeIDType	ExchangeID;
+	///方向
+	TThostFtdcDirectionType	Direction;
+	///价格
+	TThostFtdcPriceType	Price;
+	///数量
+	TThostFtdcVolumeType	Volume;
+};
 
 #endif

@@ -77,7 +77,11 @@ void CMyMdApi::SetHeartbeatTimeout( unsigned int timeout )
 int CMyMdApi::ReqUserLogin( CDINGFtdcReqUserLoginField *pReqUserLogin, int nRequestID )
 {
 	//CDINGFtdcReqUserLoginField myReqUserLogin;
-	CThostFtdcReqUserLoginField myReqUserLoginField;
+	CThostFtdcReqUserLoginField myReqUserLoginField={0};
+	strcpy(myReqUserLoginField.BrokerID,pReqUserLogin->BrokerID);
+	strcpy(myReqUserLoginField.UserID,pReqUserLogin->UserID);
+	strcpy(myReqUserLoginField.Password,pReqUserLogin->Password);
+
 	return realapi->ReqUserLogin(&myReqUserLoginField,nRequestID);
 }
 

@@ -43,7 +43,7 @@ void CMyTraderApi::RegisterFront( char *pszFrontAddress )
 
 void CMyTraderApi::RegisterNameServer( char *pszNsAddress )
 {
-	realapi->RegisterNameServer(pszNsAddress);
+	//realapi->RegisterNameServer(pszNsAddress);
 }
 
 void CMyTraderApi::RegisterSpi( CMyTraderSpi* pSpi )
@@ -154,6 +154,7 @@ int CMyTraderApi::ReqOrderAction( CDINGFtdcOrderActionField *pOrderAction, int n
 	//strcpy(req.OrderRef, pOrderRef); //报单引用	
 	//req.FrontID = frontId;           //前置编号	
 	//req.SessionID = sessionId;       //会话编号
+	strcpy(inputOrderAction.InstrumentID, pOrderAction->InstrumentID); //投资者代码
 	strcpy(inputOrderAction.ExchangeID, pOrderAction->ExchangeID);
 	strcpy(inputOrderAction.OrderSysID, pOrderAction->OrderSysID);
 	inputOrderAction.ActionFlag = THOST_FTDC_AF_Delete;  //操作标志 
@@ -193,13 +194,19 @@ int CMyTraderApi::ReqQryTradingCode( CDINGFtdcQryTradingCodeField *pQryTradingCo
 
 int CMyTraderApi::ReqQryInvestorAccount( CDINGFtdcQryInvestorAccountField *pQryInvestorAccount, int nRequestID )
 {
-	//return realapi->ReqQryInvestorAccount(pQryInvestorAccount,nRequestID);
+	CThostFtdcQryTradingAccountField qryInvestorAccount={0};
+	strcpy(qryInvestorAccount.BrokerID,pQryInvestorAccount->BrokerID);
+	strcpy(qryInvestorAccount.InvestorID,pQryInvestorAccount->InvestorID);
+	int ret= realapi->ReqQryTradingAccount(&qryInvestorAccount, nRequestID++);
+	return ret;
 	return 1;
 }
 
 int CMyTraderApi::ReqQryInstrument( CDINGFtdcQryInstrumentField *pQryInstrument, int nRequestID )
 {
-	//return realapi->ReqQryInstrument(pQryInstrument,nRequestID);
+	CThostFtdcQryInstrumentField qryInstrument={0};
+	strcpy(qryInstrument.InstrumentID,pQryInstrument->InstrumentID);
+	return realapi->ReqQryInstrument(&qryInstrument,nRequestID);
 	return 1;
 }
 
@@ -211,8 +218,14 @@ int CMyTraderApi::ReqQryExchange( CDINGFtdcQryExchangeField *pQryExchange, int n
 
 int CMyTraderApi::ReqQryInvestorPosition( CDINGFtdcQryInvestorPositionField *pQryInvestorPosition, int nRequestID )
 {
-	//return realapi->ReqQryInvestorPosition(pQryInvestorPosition,nRequestID);
-	return 1;
+	CThostFtdcQryInvestorPositionField  qryInvestorPosition={0};
+	strcpy(qryInvestorPosition.BrokerID,pQryInvestorPosition->BrokerID);
+	/*strcpy(qryInvestorPosition,pQryInvestorPosition->ExchangeID);*/
+	strcpy(qryInvestorPosition.InstrumentID,pQryInvestorPosition->InstrumentID);
+	strcpy(qryInvestorPosition.InvestorID,pQryInvestorPosition->InvestorID);
+	/*strcpy(qryInvestorPosition.UserID,pQryInvestorPosition->UserID);*/
+	return realapi->ReqQryInvestorPosition(&qryInvestorPosition,nRequestID);
+	//return 1;
 }
 
 int CMyTraderApi::ReqSettlementInfoConfirm(CDINGFtdcSettlementInfoConfirmField *pSettlementInfoConfirm, int nRequestID)
@@ -251,6 +264,13 @@ int CMyTraderApi::ReqQryInvestorFee( CDINGFtdcQryInvestorFeeField *pQryInvestorF
 
 int CMyTraderApi::ReqQryInvestorMargin( CDINGFtdcQryInvestorMarginField *pQryInvestorMargin, int nRequestID )
 {
+	CThostFtdcQryInstrumentMarginRateField qryInstrumentMarginRate={0};
+	strcpy(qryInstrumentMarginRate.BrokerID,pQryInvestorMargin->BrokerID);
+	strcpy(qryInstrumentMarginRate.InstrumentID,pQryInvestorMargin->InstrumentID);
+	strcpy(qryInstrumentMarginRate.InvestorID,pQryInvestorMargin->UserID);
+	//req.
+	qryInstrumentMarginRate.HedgeFlag = '1';
+	return realapi->ReqQryInstrumentMarginRate(&qryInstrumentMarginRate,nRequestID++);
 	//return realapi->ReqQryInvestorMargin(pQryInvestorMargin,nRequestID);
 	return 1;
 }
@@ -324,11 +344,22 @@ void CMyTraderSpi::OnRspOrderInsert( CThostFtdcInputOrderField *pInputOrder, CTh
 
 void CMyTraderSpi::OnRspOrderAction( CThostFtdcInputOrderActionField *pInputOrderAction, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
 {
-	CDINGFtdcOrderActionField myOrderAction;
 	CDINGFtdcRspInfoField mypRspInfo={0};
-	mypRspInfo.ErrorID=pRspInfo->ErrorID;
-	strcpy(mypRspInfo.ErrorMsg,pRspInfo->ErrorMsg);
-	realspi->OnRspOrderAction(&myOrderAction,&mypRspInfo,nRequestID,bIsLast);
+	if (pRspInfo)
+	{		
+		mypRspInfo.ErrorID=pRspInfo->ErrorID;
+		strcpy(mypRspInfo.ErrorMsg,pRspInfo->ErrorMsg);
+	}
+	CDINGFtdcOrderActionField myOrderAction;
+	if (pInputOrderAction)
+	{
+		realspi->OnRspOrderAction(&myOrderAction,&mypRspInfo,nRequestID,bIsLast);
+	}
+	else
+	{
+		realspi->OnRspOrderAction(0,&mypRspInfo,nRequestID,bIsLast);
+	}
+	
 	//throw std::exception("The method or operation is not implemented.");
 }
 
@@ -429,3 +460,183 @@ void CMyTraderSpi::OnRtnTrade( CThostFtdcTradeField *pTrade )
 	realspi->OnRtnTrade(&myTrade);
 	//throw std::exception("The method or operation is not implemented.");
 }
+
+void CMyTraderSpi::OnRspQryInstrument( CThostFtdcInstrumentField *pInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
+{
+	CDINGFtdcRspInfoField mypRspInfo={0};
+	if (pRspInfo)
+	{		
+		mypRspInfo.ErrorID=pRspInfo->ErrorID;
+		strcpy(mypRspInfo.ErrorMsg,pRspInfo->ErrorMsg);
+	}
+
+	CDINGFtdcRspInstrumentField rspInstrument={0};
+	if (pInstrument)
+	{
+		strcpy(rspInstrument.ExchangeID,pInstrument->ExchangeID);
+		strcpy(rspInstrument.ProductID,pInstrument->ProductID);
+		//strcpy(rspInstrument.ProductName,pInstrument->;
+		strcpy(rspInstrument.InstrumentID,pInstrument->InstrumentID);
+		strcpy(rspInstrument.InstrumentName,pInstrument->InstrumentName);
+		rspInstrument.DeliveryYear=pInstrument->DeliveryYear;
+		rspInstrument.DeliveryMonth=pInstrument->DeliveryMonth;
+		rspInstrument.MaxLimitOrderVolume=pInstrument->MaxLimitOrderVolume;
+		rspInstrument.MinLimitOrderVolume=pInstrument->MinLimitOrderVolume;
+		rspInstrument.MaxMarketOrderVolume=pInstrument->MaxMarketOrderVolume;
+		rspInstrument.MinMarketOrderVolume=pInstrument->MinMarketOrderVolume;
+		rspInstrument.VolumeMultiple=pInstrument->VolumeMultiple;
+		rspInstrument.PriceTick=pInstrument->PriceTick;
+		//rspInstrument.Currency=pInstrument->;
+		// 	rspInstrument.LongPosLimit=pInstrument->;
+		// 	rspInstrument.ShortPosLimit;
+		// 	rspInstrument.LowerLimitPrice;
+		// 	rspInstrument.UpperLimitPrice;
+		// 	rspInstrument.PreSettlementPrice;
+		// 	rspInstrument.InstrumentStatus;
+		strcpy(rspInstrument.CreateDate,pInstrument->CreateDate);
+		strcpy(rspInstrument.OpenDate,pInstrument->OpenDate);
+		strcpy(rspInstrument.ExpireDate,pInstrument->ExpireDate);
+		strcpy(rspInstrument.StartDelivDate,pInstrument->StartDelivDate);
+		strcpy(rspInstrument.EndDelivDate,pInstrument->EndDelivDate);
+		//strcpy(rspInstrument.BasisPrice,pInstrument->BasisPrice);
+
+		rspInstrument.IsTrading=pInstrument->IsTrading;
+		rspInstrument.UnderlyingInstrID;
+		// 	rspInstrument.UnderlyingMultiple;
+		// 	rspInstrument.PositionType;
+		// 	rspInstrument.StrikePrice;
+		// 	rspInstrument.OptionsType;
+		// 	rspInstrument.CurrencyID;
+		// 	rspInstrument.LongMarginRatio;
+		// 	rspInstrument.ShortMarginRatio;
+		realspi->OnRspQryInstrument(&rspInstrument,&mypRspInfo,nRequestID++,bIsLast);
+	}
+	else{
+		realspi->OnRspQryInstrument(0,&mypRspInfo,nRequestID++,bIsLast);
+	}
+
+	
+}
+
+void CMyTraderSpi::OnRspQryTradingAccount( CThostFtdcTradingAccountField *pTradingAccount, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
+{
+	CDINGFtdcRspInfoField mypRspInfo={0};
+	if (pRspInfo)
+	{		
+		mypRspInfo.ErrorID=pRspInfo->ErrorID;
+		strcpy(mypRspInfo.ErrorMsg,pRspInfo->ErrorMsg);
+	}
+
+	CDINGFtdcRspInvestorAccountField rspInvestorAccount={0};
+	if (pTradingAccount)
+	{
+		strcpy(rspInvestorAccount.BrokerID,pTradingAccount->BrokerID);
+		//strcpy(rspInvestorAccount.InvestorID,pTradingAccount->i);
+		strcpy(rspInvestorAccount.AccountID,pTradingAccount->AccountID);
+		rspInvestorAccount.PreBalance=pTradingAccount->PreBalance;
+		rspInvestorAccount.Deposit=pTradingAccount->Deposit;
+		rspInvestorAccount.Withdraw=pTradingAccount->Withdraw;
+		rspInvestorAccount.FrozenMargin=pTradingAccount->FrozenMargin;
+		rspInvestorAccount.FrozenFee=pTradingAccount->FrozenCommission;
+		//rspInvestorAccount.FrozenPremium=pTradingAccount->f;
+		rspInvestorAccount.Fee=pTradingAccount->Commission;
+		rspInvestorAccount.CloseProfit=pTradingAccount->CloseProfit;
+		rspInvestorAccount.PositionProfit=pTradingAccount->PositionProfit;
+		rspInvestorAccount.Available=pTradingAccount->Available;
+		// 	rspInvestorAccount.LongFrozenMargin;
+		// 	rspInvestorAccount.ShortFrozenMargin;
+		// 	rspInvestorAccount.LongMargin;
+		// 	rspInvestorAccount.ShortMargin;
+		// 	rspInvestorAccount.ReleaseMargin;
+		// 	rspInvestorAccount.DynamicRights;
+		rspInvestorAccount.TodayInOut=pTradingAccount->CashIn;
+		rspInvestorAccount.Margin=pTradingAccount->CurrMargin;
+		//rspInvestorAccount.Premium;
+		//rspInvestorAccount.Risk;
+		realspi->OnRspQryInvestorAccount(&rspInvestorAccount,&mypRspInfo,nRequestID++,bIsLast);
+	}
+	else
+	{
+		realspi->OnRspQryInvestorAccount(0,&mypRspInfo,nRequestID++,bIsLast);
+
+	}
+	
+
+	
+}
+
+void CMyTraderSpi::OnRspQryInstrumentMarginRate( CThostFtdcInstrumentMarginRateField *pInstrumentMarginRate, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
+{
+	CDINGFtdcRspInfoField mypRspInfo={0};
+	if (pRspInfo)
+	{		
+		mypRspInfo.ErrorID=pRspInfo->ErrorID;
+		strcpy(mypRspInfo.ErrorMsg,pRspInfo->ErrorMsg);
+	}
+	
+	CDINGFtdcInvestorMarginField investorMargin={0};
+	if (pInstrumentMarginRate)
+	{
+		strcpy(investorMargin.BrokerID,pInstrumentMarginRate->BrokerID);
+		strcpy(investorMargin.ClientID,pInstrumentMarginRate->InvestorID);
+		//strcpy(investorMargin.ExchangeID,pInstrumentMarginRate-;
+		strcpy(investorMargin.InstrumentID,pInstrumentMarginRate->InstrumentID);
+		//strcpy(investorMargin.ProductID,pInstrumentMarginRate->;
+		investorMargin.LongMarginRate=pInstrumentMarginRate->LongMarginRatioByMoney;
+		investorMargin.LongMarginAmt=pInstrumentMarginRate->LongMarginRatioByVolume;
+		investorMargin.ShortMarginRate=pInstrumentMarginRate->ShortMarginRatioByMoney;
+		investorMargin.ShortMarginAmt=pInstrumentMarginRate->ShortMarginRatioByVolume;
+		realspi->OnRspQryInvestorMargin(&investorMargin,&mypRspInfo,nRequestID++,bIsLast);
+	}
+	else
+	{
+		realspi->OnRspQryInvestorMargin(0,&mypRspInfo,nRequestID++,bIsLast);
+	}
+	
+	
+}
+
+void CMyTraderSpi::OnRspQryInvestorPosition( CThostFtdcInvestorPositionField *pInvestorPosition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast )
+{
+	CDINGFtdcRspInfoField mypRspInfo={0};
+	if (pRspInfo)
+	{		
+		mypRspInfo.ErrorID=pRspInfo->ErrorID;
+		strcpy(mypRspInfo.ErrorMsg,pRspInfo->ErrorMsg);
+	}
+	
+
+	CDINGFtdcRspInvestorPositionField rspInvestorPosition={0};
+	if (pInvestorPosition)
+	{
+		strcpy(rspInvestorPosition.InvestorID,pInvestorPosition->InvestorID);
+		strcpy(rspInvestorPosition.BrokerID,pInvestorPosition->BrokerID);
+		strcpy(rspInvestorPosition.ClientID,pInvestorPosition->InvestorID);
+
+		strcpy(rspInvestorPosition.InstrumentID,pInvestorPosition->InstrumentID);
+		rspInvestorPosition.Direction = pInvestorPosition->PosiDirection;
+		rspInvestorPosition.HedgeFlag = pInvestorPosition->HedgeFlag;
+		rspInvestorPosition.UsedMargin = pInvestorPosition->UseMargin;
+
+		/*rspInvestorPosition.ExchangeID = pInvestorPosition->e*/
+		rspInvestorPosition.Position  = pInvestorPosition->TodayPosition;
+		rspInvestorPosition.PositionCost = pInvestorPosition->PositionCost;
+		rspInvestorPosition.YdPosition = pInvestorPosition->YdPosition;
+
+		rspInvestorPosition.FrozenMargin = pInvestorPosition->FrozenMargin;
+
+// 		rspInvestorPosition.LastTradeID;
+// 		rspInvestorPosition.LastOrderLocalID;
+// 		rspInvestorPosition.Currency;
+
+
+		
+		realspi->OnRspQryInvestorPosition(&rspInvestorPosition,&mypRspInfo,nRequestID++,bIsLast);
+	}
+	else
+	{
+		realspi->OnRspQryInvestorPosition(0,&mypRspInfo,nRequestID++,bIsLast);
+	}
+
+}
+

@@ -46,6 +46,8 @@ template< class Timer > double time( const int trials ) {
 }
 
 int main( int argc, const char *argv[] ) {
+	
+	
 	const int trials = 1000;
 
 	printf( "rdtsc, %.0f cycles\n", time<rdtsc>( trials ) );

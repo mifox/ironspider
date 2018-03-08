@@ -39,7 +39,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\LinuxProject2\;$(IncludePath)</IncludePath>
+    <IncludePath>..\LinuxProject2\;D:\linuxwork\ironspider\Linux2ctp\src\windows;D:\linuxwork\ironspider\Linux2ctp\src;D:\linuxwork\ironspider\Linux2ctp\myapi;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -111,6 +111,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Linux2ctp\src\simple_test.cc" />
+    <ClCompile Include="..\Linux2ctp\src\windows\port.cc" />
     <ClCompile Include="..\LinuxProject2\zthread\src\AtomicCount.cxx" />
     <ClCompile Include="..\LinuxProject2\zthread\src\ConcurrentExecutor.cxx" />
     <ClCompile Include="..\LinuxProject2\zthread\src\Condition.cxx" />
