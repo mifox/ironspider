@@ -20,6 +20,11 @@ using namespace log4cplus::helpers;
 #define EVENT_TD_LOGOUT 80005
 #define EVENT_TD_REQQRYORDER 80006
 #define EVENT_TD_WEBACCESS 80007
+#define EVENT_TD_REQQRYPOSTIONDETAIL 80008
+#define EVENT_TD_REQQRYTRDE 80009
+#define EVENT_TD_REQQRYTDACCOUNT 80010 
+#define EVENT_TD_REQQRYMARGINRATE 80011
+#define EVENT_TD_REQQRYPOSTION 80012
 
 #define EVENT_MD_INIT 90000
 #define EVENT_MD_CONNECT 90001
@@ -106,13 +111,17 @@ extern int cffex_ws_900_855;
 extern double	jiangebase854ms;
 extern double	jiangebase858ms;
 extern double	jiangebase900ms;
+extern CDINGFtdcRspInvestorAccountField *pTdaccount;
 
 extern int attackvol;
 extern std::map<std::string, CDINGFtdcDepthMarketDataField> mapMd; 
 extern int  onRtnOrderLogFlag;//不主动处理回报
 
+extern vector<CDINGFtdcRspInstrumentField> instrumentList;
+extern vector<CDINGFtdcOrderFieldEX*> atkorderList;
 extern vector<CDINGFtdcOrderFieldEX*> atkorderList;
 extern vector<CDINGFtdcOrderField*> orderList;
+extern vector<CDINGFtdcRspInvestorPositionField> postionList;
 extern Logger log_1;
 #endif
 

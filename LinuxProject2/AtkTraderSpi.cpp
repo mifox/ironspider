@@ -627,6 +627,21 @@ void AtkCTraderSpi::OnRspQryInvestorAccount(CDINGFtdcRspInvestorAccountField *pR
 	LOG4CPLUS_DEBUG_FMT(log_1,"多头保证金=[%lf]\n",pRspInvestorAccount->LongMargin);
 	LOG4CPLUS_DEBUG_FMT(log_1,"空头保证金=[%lf]\n",pRspInvestorAccount->ShortMargin);
 	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+	if (pRspInvestorAccount){
+		CDINGFtdcRspInvestorAccountField *pTradingAccount1=new CDINGFtdcRspInvestorAccountField;
+		memcpy(pTradingAccount1,pRspInvestorAccount,sizeof(CDINGFtdcRspInvestorAccountField));
+		pTdaccount = pTradingAccount1;
+// 		LOG4CPLUS_DEBUG(log_1," 响应 | 权益:"<<pRspInvestorAccount->Balance
+// 			<<" 可用:"<<pRspInvestorAccount->Available   
+// 			<<" 保证金:"<<pRspInvestorAccount->CurrMargin
+// 			<<" 平仓盈亏:"<<pRspInvestorAccount->CloseProfit
+// 			<<" 持仓盈亏"<<pRspInvestorAccount->PositionProfit
+// 			<<" 手续费:"<<pRspInvestorAccount->Commission
+// 			<<" 冻结保证金:"<<pRspInvestorAccount->FrozenMargin
+// 			//<<" 冻结手续费:"<<pTradingAccount->FrozenCommission 
+// 			<< endl);    
+	}
+	if(bIsLast){pCar->sendSignal(EVENT_TD_REQQRYTDACCOUNT);};
 
 }
 
@@ -700,6 +715,15 @@ void AtkCTraderSpi::OnRspQryInstrument(CDINGFtdcRspInstrumentField *pRspInstrume
 		LOG4CPLUS_DEBUG_FMT(log_1,"没有查询到合约数据\n");
 		return ;
 	}
+
+	if (pRspInstrument){
+		LOG4CPLUS_DEBUG(log_1," 响应 | 合约:"<<pRspInstrument->InstrumentID
+			<<" 交割月:"<<pRspInstrument->DeliveryMonth
+			<<" 多头保证金率:"<<pRspInstrument->LongMarginRatio
+			<<" 空头保证金率:"<<pRspInstrument->ShortMarginRatio<<endl);
+		instrumentList.push_back(*pRspInstrument);
+	}
+	if(bIsLast){pCar->sendSignal(EVENT_TD_QRYINSTRUMENT);};
 	
 	Show(pRspInstrument);
 	return ;
@@ -731,26 +755,36 @@ void AtkCTraderSpi::OnRspQryTradingCode(CDINGFtdcRspTradingCodeField *pTradingCo
 
 void AtkCTraderSpi::OnRspQryInvestorPosition(CDINGFtdcRspInvestorPositionField *pRspInvestorPosition, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) 
 {
+
 	if (pRspInfo!=NULL&&pRspInfo->ErrorID!=0)
 	{
 		LOG4CPLUS_DEBUG_FMT(log_1,"查询投资者持仓 错误原因：%s\n", UTF8(pRspInfo->ErrorMsg));
-		return;
+		//return;
 	}
-	
-	if (pRspInvestorPosition==NULL)
+	else if (pRspInvestorPosition==NULL)
 	{
 		LOG4CPLUS_DEBUG_FMT(log_1,"没有查询到投资者持仓\n");
-		return ;
+		//return ;
 	}
-	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
-	LOG4CPLUS_DEBUG_FMT(log_1,"交易所代码=[%s]\n",pRspInvestorPosition->ExchangeID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"经纪公司编号=[%s]\n",pRspInvestorPosition->BrokerID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"投资者编号=[%s]\n",pRspInvestorPosition->InvestorID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"客户代码=[%s]\n",pRspInvestorPosition->ClientID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"合约代码=[%s]\n",pRspInvestorPosition->InstrumentID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"买卖方向=[%c]\n",pRspInvestorPosition->Direction);
-	LOG4CPLUS_DEBUG_FMT(log_1,"今持仓量=[%d]\n",pRspInvestorPosition->Position);
-	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+	else
+	{
+		LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+		LOG4CPLUS_DEBUG_FMT(log_1,"交易所代码=[%s]\n",pRspInvestorPosition->ExchangeID);
+		LOG4CPLUS_DEBUG_FMT(log_1,"经纪公司编号=[%s]\n",pRspInvestorPosition->BrokerID);
+		LOG4CPLUS_DEBUG_FMT(log_1,"投资者编号=[%s]\n",pRspInvestorPosition->InvestorID);
+		LOG4CPLUS_DEBUG_FMT(log_1,"客户代码=[%s]\n",pRspInvestorPosition->ClientID);
+		LOG4CPLUS_DEBUG_FMT(log_1,"合约代码=[%s]\n",pRspInvestorPosition->InstrumentID);
+		LOG4CPLUS_DEBUG_FMT(log_1,"买卖方向=[%c]\n",pRspInvestorPosition->Direction);
+		LOG4CPLUS_DEBUG_FMT(log_1,"今持仓量=[%d]\n",pRspInvestorPosition->Position);
+		LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+		postionList.push_back(*pRspInvestorPosition);
+
+	}
+	if (bIsLast==true)
+	{
+		this->pCar->sendSignal(EVENT_TD_REQQRYPOSTION);
+	}	
+	
 	return ;
 
 }
@@ -807,6 +841,20 @@ void AtkCTraderSpi::OnRspQryInvestorMargin(CDINGFtdcInvestorMarginField *pInvest
 	LOG4CPLUS_DEBUG_FMT(log_1,"空头占用保证金按比例=[%f]\n",pInvestorMargin->ShortMarginRate);
 	LOG4CPLUS_DEBUG_FMT(log_1,"空头保证金按手数=[%f]\n",pInvestorMargin->ShortMarginAmt);
 	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+
+	if (1){
+		for (int i=0;i<instrumentList.size();i++)
+		{
+			if (!strcmp(instrumentList[i].InstrumentID,pInvestorMargin->InstrumentID))
+			{
+				//atkinstrumnentinfo = instrumentList[i];
+				//LOG4CPLUS_DEBUG(log_1," OnRspQryInstrumentMarginRate"<<pInvestorMargin->LongMarginRatioByMoney<<endl);
+				instrumentList[i].LongMarginRatio = pInvestorMargin->LongMarginRate;
+				instrumentList[i].ShortMarginRatio = pInvestorMargin->ShortMarginRate;
+			}
+		}  
+	}
+	if(bIsLast){pCar->sendSignal(EVENT_TD_REQQRYMARGINRATE);};
 	return ;
 
 }
@@ -953,4 +1001,37 @@ void AtkCTraderSpi::OnRspError( CDINGFtdcRspInfoField *pRspInfo, int nRequestID,
 void AtkCTraderSpi::OnFrontDisconnected( int nReason )
 {
 	printf("The method or operation is not implemented.");
+}
+
+void AtkCTraderSpi::ReqQryTradingAccount()
+{
+	CDINGFtdcQryInvestorAccountField req={0};
+	memset(&req, 0, sizeof(req));
+	strcpy(req.BrokerID, appId);
+	strcpy(req.InvestorID, userId);
+	m_pUserApi->ReqQryInvestorAccount(&req,nRequestID++);
+}
+
+void AtkCTraderSpi::ReqQryMarginRate( CDINGFtdcQryInvestorMarginField *req )
+{
+	CDINGFtdcQryInvestorMarginField qryInvestorMargin={0};
+	m_pUserApi->ReqQryInvestorMargin(&qryInvestorMargin,nRequestID++);
+}
+
+void AtkCTraderSpi::ReqQryInstrument( TDINGFtdcInstrumentIDType instId )
+{
+	CDINGFtdcQryInstrumentField qryInstrument={0};
+	strcpy(qryInstrument.InstrumentID,instId);
+	m_pUserApi->ReqQryInstrument(&qryInstrument,nRequestID++);
+}
+
+void AtkCTraderSpi::ReqQryInvestorPosition( TDINGFtdcInstrumentIDType instId )
+{
+	CDINGFtdcQryInvestorPositionField qryInvestorPosition={0};
+	strcpy(qryInvestorPosition.BrokerID,appId);
+	strcpy(qryInvestorPosition.InstrumentID,"");
+	strcpy(qryInvestorPosition.UserID,userId);
+	strcpy(qryInvestorPosition.InvestorID,userId);
+	m_pUserApi->ReqQryInvestorPosition(&qryInvestorPosition,nRequestID++);
+
 }

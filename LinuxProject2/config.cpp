@@ -15,7 +15,7 @@ using namespace std;
 
 extern log4cplus::Logger log_1;
 
-
+HANDLE g_hEvent;
 // «∞÷√µÿ÷∑
 char mdFront []   = "tcp://222.66.235.70:61213";
 char tradeFront[100];
@@ -70,12 +70,16 @@ double	jiangebase854ms=-1;
 double	jiangebase858ms=-1;
 double	jiangebase900ms=-1;
 
+CDINGFtdcRspInvestorAccountField *pTdaccount;
 //std::map<std::string, CThostFtdcDepthMarketDataField> map;
 int requestId = 0;
 //CtpTraderMiniSpi* orderMini=NULL;
 
 std::map<std::string, CDINGFtdcDepthMarketDataField> mapMd; 
 vector<CDINGFtdcOrderField*> orderList;
+vector<CDINGFtdcRspInstrumentField> instrumentList;
+
+vector<CDINGFtdcRspInvestorPositionField> postionList;
 
 
 int configFromIniFile() 
@@ -323,3 +327,4 @@ int main2test(void)
 
 PublicFuncs pb;
 vector<CDINGFtdcOrderFieldEX*> atkorderList;
+vector<CDINGFtdcOrderFieldEX*> atkorderList0000;

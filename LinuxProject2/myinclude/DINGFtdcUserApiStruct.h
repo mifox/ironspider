@@ -401,6 +401,11 @@ struct CDINGFtdcRspInstrumentField
 	TDINGFtdcOptionsTypeType	OptionsType;
 	///币种代码
 	TDINGFtdcCurrencyIDType	CurrencyID;
+
+    	///多头保证金率
+	TDINGFtdcRatioType	LongMarginRatio;
+	///空头保证金率
+	TDINGFtdcRatioType	ShortMarginRatio;
 };
 ///合约状态
 struct CDINGFtdcInstrumentStatusField

@@ -54,6 +54,15 @@ public:
 	virtual void OnRspQryInvestorMargin(CDINGFtdcInvestorMarginField *pInvestorMargin, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 
 	virtual void ReqOrderInsertReady( TDINGFtdcInstrumentIDType instId, TDINGFtdcDirectionType dir, TDINGFtdcOffsetFlagType kpp, TDINGFtdcPriceType price, TDINGFtdcVolumeType vol,TDINGFtdcExchangeIDType	exchangeID, CDINGFtdcInputOrderField& req );
+	void ReqSettlementInfoConfirm();
+	///请求查询合约
+	void ReqQryInstrument(TDINGFtdcInstrumentIDType instId);
+	///请求查询资金账户
+	void ReqQryTradingAccount();
+
+	void ReqQryMarginRate(CDINGFtdcQryInvestorMarginField *req);
+	///请求查询投资者持仓
+	void ReqQryInvestorPosition(TDINGFtdcInstrumentIDType instId);
 
 	void Show(CDINGFtdcOrderField *pOrder);
 	void Show(CDINGFtdcTradeField *pTrade);
@@ -64,9 +73,11 @@ public:
 	CDINGFtdcRspUserLoginField rspUserLogin;
 	//void ReqUserLogin()
 private:
-  CMyTraderApi *m_pUserApi;
+  
   CMyTraderSpi* pTdSpi;
   CMyTraderSpi* realspi;
+public:
+  CMyTraderApi *m_pUserApi;
   CountedPtr<Car> pCar;
  
 	
