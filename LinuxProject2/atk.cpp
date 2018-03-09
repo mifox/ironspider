@@ -649,7 +649,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			CDINGFtdcInputOrderField test_attackReq;
 			int ret = CtpAtkMd::getAtkInputOrder(testAtkInstlist[atkexchange],test_attackReq); //IF1412
 
-			oneKeyCleanPostion(& spi);
+			
 
 
 			
@@ -1711,11 +1711,11 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 									onRtnOrderLogFlag=1;int j=0;
 									{
 										{
-											LOG4CPLUS_DEBUG(log_1,"attackReq["<<attackReq.InstrumentID
-												<<attackReq.Direction
-												<<attackReq.Volume
-												<<attackReq.LimitPrice												
-												<<endl);
+// 											LOG4CPLUS_DEBUG(log_1,"attackReq["<<attackReq.InstrumentID
+// 												<<attackReq.Direction
+// 												<<attackReq.Volume
+// 												<<attackReq.LimitPrice												
+// 												<<endl);
 											strcpy(instId,attackReq.InstrumentID);
 											dir=attackReq.Direction;
 											kpp=attackReq.OffsetFlag;		
@@ -1810,8 +1810,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								strcpy(qryInvestorPosition.InstrumentID,attackReq.InstrumentID);
 								strcpy(qryInvestorPosition.UserID,userId);
 								strcpy(qryInvestorPosition.InvestorID,userId);
-								pTrader->ReqQryInvestorPosition(&qryInvestorPosition,nRequestID++);
-								car->waitForState(1000,EVENT_TD_REQQRYPOSTION);
+
+								oneKeyCleanPostion(& spi);
 								LOG4CPLUS_DEBUG_FMT(log_1,"breakFlag=%d\n",breakFlag);
 								break;
 						}
@@ -1944,11 +1944,16 @@ void CtpAtkMd::oneKeyCleanPostion( AtkCTraderSpi* pTdSpi )
 // 	strcpy(qryInvestorPosition.InstrumentID,"");
 // 	strcpy(qryInvestorPosition.UserID,userId);
 // 	strcpy(qryInvestorPosition.InvestorID,userId);
+	postionList.clear();
 	pTdSpi->ReqQryInvestorPosition("");
-	pTdSpi->pCar->waitForState(1000,EVENT_TD_REQQRYPOSTION);
-
+	pTdSpi->pCar->waitForState(10000,EVENT_TD_REQQRYPOSTION);
+	//pTdSpi->pCar->sendSignalAuto(0);
 	for (int i=0;i<postionList.size();i++)
 	{
+		if (!postionList[i].Position)
+		{
+			continue;
+		}
 		std::cout<<postionList[i].Direction<<endl;
 
 		// 			
@@ -1987,16 +1992,25 @@ void CtpAtkMd::oneKeyCleanPostion( AtkCTraderSpi* pTdSpi )
 		}
 
 		double priceTick = atkinstrumnentinfo.PriceTick;
-		TDINGFtdcPriceType price=postionList[i].PositionCost;
-		if (postionList[i].Direction == THOST_FTDC_PD_Long)
+		TDINGFtdcPriceType price;
+		if (atkinstrumnentinfo.VolumeMultiple&&priceTick)
 		{
-			price -= priceTick;
-			dir=DING_FTDC_D_Buy;
+			price=postionList[i].PositionCost/atkinstrumnentinfo.VolumeMultiple/priceTick*priceTick;
 		}
-		else if (postionList[i].Direction == THOST_FTDC_PD_Short)
+		else
+		{
+			price=postionList[i].PositionCost/10;
+		}
+		
+		if (postionList[i].Direction == THOST_FTDC_PD_Long)
 		{
 			price += priceTick;
 			dir=DING_FTDC_D_Sell;
+		}
+		else if (postionList[i].Direction == THOST_FTDC_PD_Short)
+		{
+			price -= priceTick;
+			dir=DING_FTDC_D_Buy;
 		}
 		TDINGFtdcOffsetFlagType kpp=DING_FTDC_OF_Close;
 		if (functionNO == FUNCTION_CLOSETODAY)

@@ -705,6 +705,11 @@ void Car::waitForState( unsigned long timeout,int sv )
 		printf("xxxxx");
 	}
 	printf("xxxxxy");
+	if (autoreset==1)
+	{
+		stateValue=0;
+		autoreset=0;
+	}
 	    
 }
 
@@ -720,6 +725,15 @@ void Car::waitForBuffing()
 	Guard<Mutex> g(lock);
 	while(waxOn == true)
 		condition.wait();
+}
+
+void Car::sendSignalAuto( int sv )
+{
+	autoreset=1;
+	Guard<Mutex> g(lock);
+	stateValue = sv;
+	//weaken 
+	condition.signal();
 }
 
 void Car::sendSignal( int sv )

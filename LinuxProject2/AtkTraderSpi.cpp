@@ -56,7 +56,7 @@ int AtkCTraderSpi::setCar(CountedPtr<Car>& pcar)
 
 void AtkCTraderSpi::OnFrontConnected()
 {
-	this->pCar->sendSignal(EVENT_TD_CONNECT);
+	this->pCar->sendSignalAuto(EVENT_TD_CONNECT);
 //	CDINGFtdcReqUserLoginField reqUserLogin;
 // 	memset(&reqUserLogin,0,sizeof(CDINGFtdcReqUserLoginField));		
 // 	strcpy(reqUserLogin.BrokerID,g_BrokerID);
@@ -95,14 +95,14 @@ void AtkCTraderSpi::OnRspUserLogin(CDINGFtdcRspUserLoginField *pRspUserLogin, CD
 	LOG4CPLUS_DEBUG_FMT(log_1,"pRspUserLogin->SHFETime:%s\n",pRspUserLogin->SHFETime);
 	LOG4CPLUS_DEBUG_FMT(log_1,"pRspUserLogin->FFEXTime:%s\n",pRspUserLogin->FFEXTime);
 	memcpy(&rspUserLogin,pRspUserLogin,sizeof(CDINGFtdcRspUserLoginField));
-	this->pCar->sendSignal(EVENT_TD_LOGIN);
+	this->pCar->sendSignalAuto(EVENT_TD_LOGIN);
  	//StartAutoOrder();
 }
 
 void AtkCTraderSpi::OnRspUserLogout(CDINGFtdcRspUserLogoutField *pRspUserLogout, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) 
 {
 	LOG4CPLUS_DEBUG_FMT(log_1,"登chu成功，");
-	this->pCar->sendSignal(EVENT_TD_LOGOUT);
+	this->pCar->sendSignalAuto(EVENT_TD_LOGOUT);
 };
 
 void AtkCTraderSpi::OnRspOrderInsert(CDINGFtdcInputOrderField *pInputOrder, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
@@ -641,7 +641,7 @@ void AtkCTraderSpi::OnRspQryInvestorAccount(CDINGFtdcRspInvestorAccountField *pR
 // 			//<<" 冻结手续费:"<<pTradingAccount->FrozenCommission 
 // 			<< endl);    
 	}
-	if(bIsLast){pCar->sendSignal(EVENT_TD_REQQRYTDACCOUNT);};
+	if(bIsLast){pCar->sendSignalAuto(EVENT_TD_REQQRYTDACCOUNT);};
 
 }
 
@@ -723,7 +723,7 @@ void AtkCTraderSpi::OnRspQryInstrument(CDINGFtdcRspInstrumentField *pRspInstrume
 			<<" 空头保证金率:"<<pRspInstrument->ShortMarginRatio<<endl);
 		instrumentList.push_back(*pRspInstrument);
 	}
-	if(bIsLast){pCar->sendSignal(EVENT_TD_QRYINSTRUMENT);};
+	if(bIsLast){pCar->sendSignalAuto(EVENT_TD_QRYINSTRUMENT);};
 	
 	Show(pRspInstrument);
 	return ;
@@ -782,7 +782,7 @@ void AtkCTraderSpi::OnRspQryInvestorPosition(CDINGFtdcRspInvestorPositionField *
 	}
 	if (bIsLast==true)
 	{
-		this->pCar->sendSignal(EVENT_TD_REQQRYPOSTION);
+		this->pCar->sendSignalAuto(EVENT_TD_REQQRYPOSTION);
 	}	
 	
 	return ;
@@ -854,7 +854,7 @@ void AtkCTraderSpi::OnRspQryInvestorMargin(CDINGFtdcInvestorMarginField *pInvest
 			}
 		}  
 	}
-	if(bIsLast){pCar->sendSignal(EVENT_TD_REQQRYMARGINRATE);};
+	if(bIsLast){pCar->sendSignalAuto(EVENT_TD_REQQRYMARGINRATE);};
 	return ;
 
 }

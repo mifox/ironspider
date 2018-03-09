@@ -63,6 +63,8 @@ using namespace std;
 
 class Car 
 {
+	int laststatus;
+	int autoreset;
 	//Ыјзг
 	Mutex lock;
 	// the base of trehad cooperation
@@ -72,12 +74,13 @@ class Car
 	int stateValue;
 	int  targetStatus;
 public:
-	Car() : condition(lock), waxOn(false),stateValue(0),targetStatus(100) {}    //lock nad not wax
+	Car() : condition(lock), waxOn(false),stateValue(0),targetStatus(100),autoreset(0) {}    //lock nad not wax
 	//waxing 
 	void waxed();
 	//liggting
 	void buffed();
 	void waitForState(unsigned long timeout,int sv);
+	void sendSignalAuto(int sv);
 	void sendSignal(int sv);
 	void waitForWaxing();
 	void waitForBuffing();
