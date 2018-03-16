@@ -146,9 +146,6 @@
 #ifndef __UINT32_MAX__
 #define __UINT32_MAX__ 0xffffffffU
 #endif
-#ifndef __GXX_EXPERIMENTAL_CXX0X__
-#define __GXX_EXPERIMENTAL_CXX0X__ 1
-#endif
 #ifndef __LDBL_MAX_EXP__
 #define __LDBL_MAX_EXP__ 16384
 #endif
@@ -210,7 +207,7 @@
 #define __STDC_IEC_559__ 1
 #endif
 #ifndef __STDC_ISO_10646__
-#define __STDC_ISO_10646__ 201103L
+#define __STDC_ISO_10646__ 201505L
 #endif
 #ifndef __DECIMAL_DIG__
 #define __DECIMAL_DIG__ 21

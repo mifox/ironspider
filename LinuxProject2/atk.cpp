@@ -881,6 +881,21 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			{
 				strcpy(programchoose,(common_params_maps["programchoose"]).data());
 			}
+			static int xdebug=0;
+			if (xdebug<1)
+			{
+				xdebug ++;
+				CDINGFtdcInputOrderField req;
+				memset(&req, 0, sizeof(req));	
+				//strcpy(req.ExchangeID,"SHFE");
+				getexchId(atkexchange,exchageID);
+				spi.ReqOrderInsertReady("wr1902",'0',kpp,2808,1,exchageID,req);
+
+
+				int ret = pTrader->ReqOrderInsert(&req, nRequestID++);
+				//pTrader->
+				//pTrader->ReqOrderInsert()
+			}
 
 			if (!strcmp(programchoose,"debug") && price>100)
 			{
@@ -888,7 +903,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				memset(&req, 0, sizeof(req));	
 				//strcpy(req.ExchangeID,"SHFE");
 				getexchId(atkexchange,exchageID);
-				spi.ReqOrderInsertReady("rb1701",'0',kpp,3713,1,exchageID,req);
+				spi.ReqOrderInsertReady("wr1902",'0',kpp,2808,1,exchageID,req);
 				
 
 				int ret = pTrader->ReqOrderInsert(&req, nRequestID++);
@@ -1064,7 +1079,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 						if (myMilliseconds > targetSeconds)
 						{
-							for(int i=1;i<3;i++)
+							for(int i=1;i<31;i++)
 							{
 
 								CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);

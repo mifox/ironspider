@@ -35,7 +35,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := atk.cpp AtkTraderSpi.cpp calcstr.cpp ConfigParser.cpp PathHelper.cpp PublicFuncs.cpp testapi.cpp TraderSpi.cpp webserver/base64.cpp webserver/socket.cpp webserver/stdHelpers.cpp webserver/UrlHelper.cpp webserver/webserver.cpp webserver/webserverInstance.cpp
+SOURCEFILES := ../LinuxProject11/LinuxProject11.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -181,26 +181,6 @@ $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated
 
 
-$(BINARYDIR)/base64.o : webserver/base64.cpp $(all_make_files) |$(BINARYDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
-
-
-$(BINARYDIR)/socket.o : webserver/socket.cpp $(all_make_files) |$(BINARYDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
-
-
-$(BINARYDIR)/stdHelpers.o : webserver/stdHelpers.cpp $(all_make_files) |$(BINARYDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
-
-
-$(BINARYDIR)/UrlHelper.o : webserver/UrlHelper.cpp $(all_make_files) |$(BINARYDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
-
-
-$(BINARYDIR)/webserver.o : webserver/webserver.cpp $(all_make_files) |$(BINARYDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
-
-
-$(BINARYDIR)/webserverInstance.o : webserver/webserverInstance.cpp $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/LinuxProject11.o : ../LinuxProject11/LinuxProject11.cpp $(all_make_files) |$(BINARYDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 

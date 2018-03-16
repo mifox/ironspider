@@ -15,7 +15,7 @@ using namespace std;
 
 extern log4cplus::Logger log_1;
 
-HANDLE g_hEvent;
+//HANDLE g_hEvent;
 // «∞÷√µÿ÷∑
 char mdFront []   = "tcp://222.66.235.70:61213";
 char tradeFront[100];

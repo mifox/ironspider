@@ -28,7 +28,7 @@ public:
 	;
 	~buffer()
 	{
-		free(body);
+		//free(body);
 	}
 	char * body;	
 };
@@ -56,7 +56,7 @@ int AtkCTraderSpi::setCar(CountedPtr<Car>& pcar)
 
 void AtkCTraderSpi::OnFrontConnected()
 {
-	this->pCar->sendSignalAuto(EVENT_TD_CONNECT);
+	this->pCar->sendSignal(EVENT_TD_CONNECT);////
 //	CDINGFtdcReqUserLoginField reqUserLogin;
 // 	memset(&reqUserLogin,0,sizeof(CDINGFtdcReqUserLoginField));		
 // 	strcpy(reqUserLogin.BrokerID,g_BrokerID);
@@ -717,10 +717,10 @@ void AtkCTraderSpi::OnRspQryInstrument(CDINGFtdcRspInstrumentField *pRspInstrume
 	}
 
 	if (pRspInstrument){
-		LOG4CPLUS_DEBUG(log_1," 响应 | 合约:"<<pRspInstrument->InstrumentID
-			<<" 交割月:"<<pRspInstrument->DeliveryMonth
-			<<" 多头保证金率:"<<pRspInstrument->LongMarginRatio
-			<<" 空头保证金率:"<<pRspInstrument->ShortMarginRatio<<endl);
+// 		LOG4CPLUS_DEBUG(log_1," 响应 | 合约:"<<pRspInstrument->InstrumentID
+// 			<<" 交割月:"<<pRspInstrument->DeliveryMonth
+// 			<<" 多头保证金率:"<<pRspInstrument->LongMarginRatio
+// 			<<" 空头保证金率:"<<pRspInstrument->ShortMarginRatio<<endl);
 		instrumentList.push_back(*pRspInstrument);
 	}
 	if(bIsLast){pCar->sendSignalAuto(EVENT_TD_QRYINSTRUMENT);};
@@ -832,15 +832,15 @@ void AtkCTraderSpi::OnRspQryInvestorMargin(CDINGFtdcInvestorMarginField *pInvest
 		LOG4CPLUS_DEBUG_FMT(log_1,"没有查询到投资者保证金率\n");
 		return ;
 	}
-	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
-	LOG4CPLUS_DEBUG_FMT(log_1,"经纪公司编号=[%s]\n",pInvestorMargin->BrokerID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"合约代码=[%s]\n",pInvestorMargin->InstrumentID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"客户代码=[%s]\n",pInvestorMargin->ClientID);
-	LOG4CPLUS_DEBUG_FMT(log_1,"多头占用保证金按比例=[%f]\n",pInvestorMargin->LongMarginRate);
-	LOG4CPLUS_DEBUG_FMT(log_1,"多头保证金按手数=[%f]\n",pInvestorMargin->LongMarginAmt);
-	LOG4CPLUS_DEBUG_FMT(log_1,"空头占用保证金按比例=[%f]\n",pInvestorMargin->ShortMarginRate);
-	LOG4CPLUS_DEBUG_FMT(log_1,"空头保证金按手数=[%f]\n",pInvestorMargin->ShortMarginAmt);
-	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"经纪公司编号=[%s]\n",pInvestorMargin->BrokerID);
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"合约代码=[%s]\n",pInvestorMargin->InstrumentID);
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"客户代码=[%s]\n",pInvestorMargin->ClientID);
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"多头占用保证金按比例=[%f]\n",pInvestorMargin->LongMarginRate);
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"多头保证金按手数=[%f]\n",pInvestorMargin->LongMarginAmt);
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"空头占用保证金按比例=[%f]\n",pInvestorMargin->ShortMarginRate);
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"空头保证金按手数=[%f]\n",pInvestorMargin->ShortMarginAmt);
+// 	LOG4CPLUS_DEBUG_FMT(log_1,"-----------------------------\n");
 
 	if (1){
 		for (int i=0;i<instrumentList.size();i++)
@@ -1015,6 +1015,7 @@ void AtkCTraderSpi::ReqQryTradingAccount()
 void AtkCTraderSpi::ReqQryMarginRate( CDINGFtdcQryInvestorMarginField *req )
 {
 	CDINGFtdcQryInvestorMarginField qryInvestorMargin={0};
+	strcpy(qryInvestorMargin.InstrumentID,req->InstrumentID);
 	m_pUserApi->ReqQryInvestorMargin(&qryInvestorMargin,nRequestID++);
 }
 

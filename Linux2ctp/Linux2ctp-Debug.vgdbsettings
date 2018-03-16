@@ -7,19 +7,19 @@
       <PathStyle>RemoteUnix</PathStyle>
     </CustomSourceDirectories>
     <BuildHost>
-      <HostName>140.207.50.174:7122</HostName>
+      <HostName>203.156.223.166:51150</HostName>
       <Transport>SSH</Transport>
       <UserName>root</UserName>
     </BuildHost>
     <DeploymentHost>
-      <HostName>140.207.50.174:7122</HostName>
+      <HostName>203.156.223.166:51150</HostName>
       <Transport>SSH</Transport>
       <UserName>root</UserName>
     </DeploymentHost>
     <MainSourceTransferCommand>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
       <RemoteHost>
-        <HostName>140.207.50.174:7122</HostName>
+        <HostName>203.156.223.166:51150</HostName>
         <Transport>SSH</Transport>
         <UserName>root</UserName>
       </RemoteHost>
@@ -38,7 +38,10 @@
       </FileMasks>
       <TransferNewFilesOnly>true</TransferNewFilesOnly>
       <IncludeSubdirectories>true</IncludeSubdirectories>
-      <SelectedDirectories />
+      <SelectedDirectories>
+        <string>myapi</string>
+        <string>src</string>
+      </SelectedDirectories>
     </MainSourceTransferCommand>
     <AllowChangingHostForMainCommands>false</AllowChangingHostForMainCommands>
     <SkipBuildIfNoSourceFilesChanged>false</SkipBuildIfNoSourceFilesChanged>
@@ -50,7 +53,7 @@
     <MakeConfigurationName>Debug</MakeConfigurationName>
     <AdditionalMakeArguments />
     <Toolchain>
-      <Name>Default GCC toolchain on 140.207.50.174:7122</Name>
+      <Name>Default GCC toolchain on 203.156.223.166:51150</Name>
       <UnixSystem>true</UnixSystem>
       <GCC>gcc</GCC>
       <GXX>g++</GXX>
@@ -82,7 +85,7 @@
     <MakeCommandTemplate>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
       <RemoteHost>
-        <HostName>140.207.50.174:7122</HostName>
+        <HostName>203.156.223.166:51150</HostName>
         <Transport>SSH</Transport>
         <UserName>root</UserName>
       </RemoteHost>
@@ -137,9 +140,9 @@
     </AdditionalGDBSettings>
     <LaunchGDBSettings xsi:type="GDBLaunchParametersNewInstance">
       <DebuggedProgram>$(TargetPath)</DebuggedProgram>
-      <GDBServerPort>2000</GDBServerPort>
-      <ProgramArguments>11111</ProgramArguments>
-      <WorkingDirectory>$(TargetDir)</WorkingDirectory>
+      <GDBServerPort>2001</GDBServerPort>
+      <ProgramArguments>--closetoday</ProgramArguments>
+      <WorkingDirectory>/nottmp/VisualGDB/d/linuxwork/ironspider/Linux2ctp</WorkingDirectory>
     </LaunchGDBSettings>
     <GenerateCtrlBreakInsteadOfCtrlC>false</GenerateCtrlBreakInsteadOfCtrlC>
     <DeploymentTargetPath />
