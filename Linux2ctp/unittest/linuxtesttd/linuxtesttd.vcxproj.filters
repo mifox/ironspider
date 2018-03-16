@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{3ae1ddb3-45b3-43a2-b713-633a0343bca5}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{fe54de02-ab46-431b-ad59-c5a13c8e7b59}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{8143765e-95ba-4036-baeb-2373a6e9a782}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{563a97d3-ff06-47fb-8732-b38bdefa6037}</UniqueIdentifier>
+      <Extensions>*.mak</Extensions>
+    </Filter>
+    <Filter Include="Source files\Zthread">
+      <UniqueIdentifier>{daede823-96f0-448e-a717-aaa4d6112a5c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="order\traderspi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="PublicFuncs.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\AtomicCount.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\ConcurrentExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\Condition.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\CountingSemaphore.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\FastMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\FastRecursiveMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\Monitor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\Mutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\PoolExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\PriorityCondition.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\PriorityInheritanceMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\PriorityMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\PrioritySemaphore.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\RecursiveMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\RecursiveMutexImpl.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\Semaphore.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\SynchronousExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\Thread.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\ThreadedExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\ThreadImpl.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\ThreadLocalImpl.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\ThreadOps.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\ThreadQueue.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="zthread\src\Time.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="api\trade\win\public\ThostFtdcMdApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="api\trade\win\public\ThostFtdcTraderApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="api\trade\win\public\ThostFtdcUserApiDataType.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="api\trade\win\public\ThostFtdcUserApiStruct.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="order\traderspi.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="PublicFuncs.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

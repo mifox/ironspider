@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{93b21d2d-1fbc-42e9-b9e6-32c39fdbcc30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{55f8804c-830f-4d39-8395-340087542a85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Zthread">
+      <UniqueIdentifier>{ec9fd146-e691-4c7a-bc5a-56c0c3754198}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\linuxtesttd\api\trade\win\public\ThostFtdcMdApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\linuxtesttd\api\trade\win\public\ThostFtdcTraderApi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\linuxtesttd\api\trade\win\public\ThostFtdcUserApiDataType.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\linuxtesttd\api\trade\win\public\ThostFtdcUserApiStruct.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\linuxtesttd\config.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\linuxtesttd\order\traderspi.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\linuxtesttd\test.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\linuxtesttd\PublicFuncs.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\linuxtesttd\order\traderspi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\test.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\PublicFuncs.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\AtomicCount.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\ConcurrentExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\Condition.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\CountingSemaphore.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\FastMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\FastRecursiveMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\Monitor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\Mutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\PoolExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\PriorityCondition.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\PriorityInheritanceMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\PriorityMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\PrioritySemaphore.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\RecursiveMutex.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\RecursiveMutexImpl.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\Semaphore.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\SynchronousExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\Thread.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\ThreadedExecutor.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\ThreadImpl.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\ThreadLocalImpl.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\ThreadOps.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\ThreadQueue.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\linuxtesttd\zthread\src\Time.cxx">
+      <Filter>Source files\Zthread</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

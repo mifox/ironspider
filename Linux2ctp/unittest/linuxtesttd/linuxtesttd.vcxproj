@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4E90AD1B-7A71-4576-BADC-69B259C6BF23}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0004\6.1.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0004\6.1.0\x86_64-pc-linux-gnu;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0004\6.1.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0005\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0003\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0006\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0000\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /rebuild "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeReBuildCommandLine>
+    <NMakeOutput>$(ProjectDir)linuxtesttd-Debug.vgdbsettings</NMakeOutput>
+    <IncludePath />
+    <ReferencePath />
+    <LibraryPath />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Release;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0004\6.1.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0004\6.1.0\x86_64-pc-linux-gnu;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0004\6.1.0\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0005\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0003\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0006\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\203.156.223.166\0000\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes>$(ProjectDir)\gcc_Release.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /rebuild "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeReBuildCommandLine>
+    <NMakeOutput>$(ProjectDir)linuxtesttd-Release.vgdbsettings</NMakeOutput>
+    <IncludePath />
+    <ReferencePath />
+    <LibraryPath />
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="order\traderspi.cpp" />
+    <ClCompile Include="PublicFuncs.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="zthread\src\AtomicCount.cxx" />
+    <ClCompile Include="zthread\src\ConcurrentExecutor.cxx" />
+    <ClCompile Include="zthread\src\Condition.cxx" />
+    <ClCompile Include="zthread\src\CountingSemaphore.cxx" />
+    <ClCompile Include="zthread\src\FastMutex.cxx" />
+    <ClCompile Include="zthread\src\FastRecursiveMutex.cxx" />
+    <ClCompile Include="zthread\src\Monitor.cxx" />
+    <ClCompile Include="zthread\src\Mutex.cxx" />
+    <ClCompile Include="zthread\src\PoolExecutor.cxx" />
+    <ClCompile Include="zthread\src\PriorityCondition.cxx" />
+    <ClCompile Include="zthread\src\PriorityInheritanceMutex.cxx" />
+    <ClCompile Include="zthread\src\PriorityMutex.cxx" />
+    <ClCompile Include="zthread\src\PrioritySemaphore.cxx" />
+    <ClCompile Include="zthread\src\RecursiveMutex.cxx" />
+    <ClCompile Include="zthread\src\RecursiveMutexImpl.cxx" />
+    <ClCompile Include="zthread\src\Semaphore.cxx" />
+    <ClCompile Include="zthread\src\SynchronousExecutor.cxx" />
+    <ClCompile Include="zthread\src\Thread.cxx" />
+    <ClCompile Include="zthread\src\ThreadedExecutor.cxx" />
+    <ClCompile Include="zthread\src\ThreadImpl.cxx" />
+    <ClCompile Include="zthread\src\ThreadLocalImpl.cxx" />
+    <ClCompile Include="zthread\src\ThreadOps.cxx" />
+    <ClCompile Include="zthread\src\ThreadQueue.cxx" />
+    <ClCompile Include="zthread\src\Time.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="debug.mak" />
+    <None Include="Makefile" />
+    <None Include="release.mak" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="api\trade\win\public\ThostFtdcMdApi.h" />
+    <ClInclude Include="api\trade\win\public\ThostFtdcTraderApi.h" />
+    <ClInclude Include="api\trade\win\public\ThostFtdcUserApiDataType.h" />
+    <ClInclude Include="api\trade\win\public\ThostFtdcUserApiStruct.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="order\traderspi.h" />
+    <ClInclude Include="PublicFuncs.h" />
+    <ClInclude Include="test.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
