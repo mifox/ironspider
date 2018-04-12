@@ -511,6 +511,11 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 	}
 	LOG4CPLUS_DEBUG_FMT(log_1,"[resultTimeCalc] %d = %d\n",resultTimeCalc.detaSecondsFromR2L,resultTimeCalc.Milliseconds);
 
+#ifdef MiniAPI
+	resultTimeCalc.detaSecondsFromR2L=0;
+	resultTimeCalc.Milliseconds=0;
+#endif
+
 	//------3-------登录 等待
 	
 	CDINGFtdcReqUserLoginField reqUserLogin={0};
@@ -548,9 +553,9 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 	attackReq.Volume = 0;
 	attackReq.OffsetFlag='0';
-	attackReq2.Volume = 1;
+	attackReq2.Volume = -1;
 	attackReq2.OffsetFlag='0';
-	attackReq3.Volume = 1;
+	attackReq3.Volume = -1;
 	attackReq3.OffsetFlag='0';
 	LOG4CPLUS_DEBUG_FMT(log_1,"Attack exchangeM %s",exchangeM);
 	
@@ -1079,7 +1084,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 						if (myMilliseconds > targetSeconds)
 						{
-							for(int i=1;i<31;i++)
+							for(int i=1;i<51;i++)
 							{
 
 								CDINGFtdcInputOrderField& req=*(new CDINGFtdcInputOrderField);
@@ -1237,7 +1242,16 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 				targetSeconds = testTime_l + 60000;
 				LOG4CPLUS_DEBUG_FMT(log_1,"[s1]cancel order time  [myMilliseconds]:%ld | [targetSeconds]:%ld\n",myMilliseconds,targetSeconds);
 				if (myMilliseconds > targetSeconds - 4000 && myMilliseconds < targetSeconds + 4000)
-				{	
+				{
+					long milliseconds855remote = 0;
+					if (abs(testTime_l-(8*60+55)*60*1000)<60*1000)
+					{
+						milliseconds855remote=(8*60+55)*60*1000;
+					}
+					else
+					{
+						milliseconds855remote = (testTime_l+800)/1000*1000;
+					}
 					LOG4CPLUS_DEBUG_FMT(log_1,"[s1]cancel order time in\n");
 					for(i=0; i<atkorderList.size()-1; i++){
 
@@ -1247,7 +1261,6 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 						{
 							__int64 t1=*(__int64*)atkorderList[i]->exmaps["sys_time_qpc"];
 							LOG4CPLUS_DEBUG_FMT(log_1,"[sys_time_qpc %d] :[t1]:%lld\n",i,t1);
-
 
 
 							LOG4CPLUS_DEBUG_FMT(log_1,"[calc last no inserted order] :i < atkorderList.size()+1");
@@ -1263,7 +1276,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								LOG4CPLUS_DEBUG_FMT(log_1,"[855lastNoUseOrderwMilliseconds1]:%u.%u\n",sys.seconds,sys.wMilliseconds);
 								long milliseconds855local = (sys.seconds)*1000+sys.wMilliseconds;
 								LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds855local]:%d\n",milliseconds855local);
-								long milliseconds855remote = (testTime_l+800)/1000*1000;
+								
 								LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds855remote]:%d\n",milliseconds855remote);
 								timedeta855 = (milliseconds855local - milliseconds855remote);
 
@@ -1308,7 +1321,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								long milliseconds855local = (sys.seconds)*1000+sys.wMilliseconds;
 								LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds855local]:%d\n",milliseconds855local);
 								//long milliseconds855remote = ((8*60+55)*60+0)*1000+0;
-								long milliseconds855remote =(testTime_l+800)/1000*1000;
+								//long milliseconds855remote =(testTime_l+800)/1000*1000;
 								LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds855remote]:%d\n",milliseconds855remote);
 								timedeta855 = (milliseconds855local - milliseconds855remote);
 
@@ -1330,8 +1343,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 								long milliseconds855local = (sys.seconds)*1000+sys.wMilliseconds;
 								LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds855local]:%d\n",milliseconds855local);
 								//long milliseconds855remote = ((8*60+55)*60+0)*1000+0;
-								long milliseconds855remote = (testTime_l+800)/1000*1000;
-								LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds855remote]:%d\n",milliseconds855remote);
+								//long milliseconds855remote = (testTime_l+800)/1000*1000;
+					         	LOG4CPLUS_DEBUG_FMT(log_1,"[milliseconds855remote]:%d\n",milliseconds855remote);
 								timedeta855 = (milliseconds855local - milliseconds855remote);
 
 								//
@@ -1601,7 +1614,8 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 					if (timedeta859==0) //全部一样的OrderStatus
 					{
 						if(atkorderList.size()>0)
-							if (atkorderList[0]->main.OrderStatus == DING_FTDC_OS_PartTradedNotQueueing)
+							//if (atkorderList[0]->main.OrderStatus == DING_FTDC_OS_PartTradedNotQueueing)
+							if (atkorderList[0]->main.OrderStatus == DING_FTDC_OS_NoTradeQueueing)
 							{
 								Tmm sys;
 								memcpy(&sys,atkorderList[atkorderList.size()-1]->exmaps["sys_time"],sizeof(Tmm));
@@ -1646,9 +1660,9 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 			if(myMilliseconds > testTime2_l)//太早进入容易没有收到输入参数
 			{
 				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time out\n");
-				targetSeconds = attackTime_l+ timedeta859; // attackTime_l此值每个循环会被自动刷新
+				targetSeconds = attackTime_l;//+ timedeta859;20180320验证是对的 不要再改了 27服务器上windows也是这个逻辑 // attackTime_l此值每个循环会被自动刷新
 				LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time [myMilliseconds] %d [targetSeconds - 4000] %d\n",myMilliseconds,targetSeconds - 4000);
-				if (((myMilliseconds > attackTime_l - 4000 && myMilliseconds < attackTime_l + 4000)) || atkmode == 2) //atkmode+++++++20151129
+				if (((myMilliseconds > targetSeconds - 4000 && myMilliseconds < targetSeconds + 4000)) || atkmode == 2) //atkmode+++++++20151129
 				{
 					LOG4CPLUS_DEBUG_FMT(log_1,"[s2]imform attack time in\n");
 					
@@ -1687,7 +1701,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 // 							LOG4CPLUS_DEBUG_FMT(log_1,"Sleep(30000);------------1\n");
 // 							Sleep(30000);
 // 						}
-						if (myMilliseconds > targetSeconds + 10000)
+						if (myMilliseconds > targetSeconds + 15000)
 						{
 							LOG4CPLUS_DEBUG_FMT(log_1,"break------------1\n");
 							break;
@@ -1698,7 +1712,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 
 						
 						c2 = getQuadPart();
-						LOG4CPLUS_DEBUG_FMT(log_1,"[c2]:%lld\n [qpc859+diff_900_859]:%lld\n",c2,qpc859+diff_900_859);
+						//LOG4CPLUS_DEBUG_FMT(log_1,"[c2]:%lld\n [qpc859+diff_900_859]:%lld\n",c2,qpc859+diff_900_859);
 						if(c2>qpc859+diff_900_859 || atkmode == 2) //+++++20151126更新分离式进攻
 							//if(c2>qpc855+diff_900_855)//+++++++++
 							//if(c2>qpc855for900+diff_900_855)//+++++++++20151103新更
@@ -1758,7 +1772,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 											reqEx->exmaps["sys_time"]=(void *) point_sys; //sys_time
 											atkorderList.push_back(reqEx);
 										}
-										if(attackReq2.Volume)
+										if(attackReq2.Volume>0)
 										{
 											strcpy(instId,attackReq2.InstrumentID);
 											dir=attackReq2.Direction;
@@ -1787,7 +1801,7 @@ CtpAtkMd* CtpAtkMd::CreateAtkApi()
 											reqEx->exmaps["sys_time"]=(void *) point_sys; //sys_time
 											atkorderList.push_back(reqEx);
 										}
-										if(attackReq3.Volume)
+										if(attackReq3.Volume>0)
 										{
 											strcpy(instId,attackReq3.InstrumentID);
 											dir=attackReq3.Direction;
