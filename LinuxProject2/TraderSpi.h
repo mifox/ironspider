@@ -19,6 +19,7 @@ public:
 
 	virtual void OnFrontConnected();
 	virtual void OnRspUserLogin(CDINGFtdcRspUserLoginField *pRspUserLogin, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
+	virtual void OnRspUserLogout(CDINGFtdcRspUserLogoutField *pRspUserLogout, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 	//traderSPI
 	virtual void OnRspOrderInsert(CDINGFtdcInputOrderField *pInputOrder, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 	virtual void OnRspOrderAction(CDINGFtdcOrderActionField *pOrderAction, CDINGFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);

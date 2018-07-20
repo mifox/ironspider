@@ -833,6 +833,7 @@ struct CDINGFtdcTradeField
 	TDINGFtdcClientIDType	ClientID;
 	///用户编号
 	TDINGFtdcUserIDType	UserID;
+	TDINGFtdcUserIDType	OrderUserID;
 	///成交编号
 	TDINGFtdcTradeIDType	TradeID;
 	///报单编号
@@ -859,6 +860,28 @@ struct CDINGFtdcTradeField
 	TDINGFtdcBusinessLocalIDType	BusinessLocalID;
 	///业务发生日期
 	TDINGFtdcDateType	ActionDay;
+
+	///本次成交手续费
+	TDINGFtdcMoneyType	UsedFee;
+	///本次成交占用保证金
+	TDINGFtdcMoneyType	UsedMargin;
+	///本次成交占用权利金
+	TDINGFtdcMoneyType	Premium;
+	///持仓表今持仓量
+	TDINGFtdcVolumeType	Position;
+	///持仓表今日持仓成本
+	TDINGFtdcPriceType	PositionCost;
+	///资金表可用资金
+	TDINGFtdcMoneyType	Available;
+	///资金表占用保证金
+	TDINGFtdcMoneyType	Margin;
+	///资金表冻结的保证金
+	TDINGFtdcMoneyType	FrozenMargin;
+
+	///策略类别
+	char 	ArbiType;
+	///合约代码
+	TDINGFtdcInstrumentIDType	ArbiInstrumentID;
 };
 
 ///数据流回退

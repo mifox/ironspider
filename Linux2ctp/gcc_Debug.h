@@ -108,7 +108,7 @@
 #define __cpp_variable_templates 201304
 #endif
 #ifndef __GNUC_PATCHLEVEL__
-#define __GNUC_PATCHLEVEL__ 0
+#define __GNUC_PATCHLEVEL__ 1
 #endif
 #ifndef __UINT_FAST8_MAX__
 #define __UINT_FAST8_MAX__ 0xff
@@ -202,12 +202,6 @@
 #endif
 #ifndef __SIZEOF_LONG__
 #define __SIZEOF_LONG__ 8
-#endif
-#ifndef __STDC_IEC_559__
-#define __STDC_IEC_559__ 1
-#endif
-#ifndef __STDC_ISO_10646__
-#define __STDC_ISO_10646__ 201505L
 #endif
 #ifndef __DECIMAL_DIG__
 #define __DECIMAL_DIG__ 21
@@ -309,9 +303,6 @@
 #ifndef __amd64
 #define __amd64 1
 #endif
-#ifndef __STDC_NO_THREADS__
-#define __STDC_NO_THREADS__ 1
-#endif
 #ifndef __ATOMIC_HLE_ACQUIRE
 #define __ATOMIC_HLE_ACQUIRE 65536
 #endif
@@ -385,13 +376,10 @@
 #define __FLT_MANT_DIG__ 24
 #endif
 #ifndef __VERSION__
-#define __VERSION__ "6.2.0 20160901"
+#define __VERSION__ "6.3.1 20170216 (Red Hat 6.3.1-3)"
 #endif
 #ifndef __cpp_unicode_characters
 #define __cpp_unicode_characters 200704
-#endif
-#ifndef _STDC_PREDEF_H
-#define _STDC_PREDEF_H 1
 #endif
 #ifndef __cpp_decltype_auto
 #define __cpp_decltype_auto 201304
@@ -401,9 +389,6 @@
 #endif
 #ifndef __FLOAT_WORD_ORDER__
 #define __FLOAT_WORD_ORDER__ __ORDER_LITTLE_ENDIAN__
-#endif
-#ifndef __STDC_IEC_559_COMPLEX__
-#define __STDC_IEC_559_COMPLEX__ 1
 #endif
 #ifndef __DEC64_EPSILON__
 #define __DEC64_EPSILON__ 1E-15DD
@@ -455,6 +440,9 @@
 #endif
 #ifndef __LDBL_EPSILON__
 #define __LDBL_EPSILON__ 1.08420217248550443401e-19L
+#endif
+#ifndef __GNUC_RH_RELEASE__
+#define __GNUC_RH_RELEASE__ 3
 #endif
 #ifndef __k8
 #define __k8 1
@@ -660,9 +648,6 @@
 #ifndef __INT_LEAST8_MAX__
 #define __INT_LEAST8_MAX__ 0x7f
 #endif
-#ifndef __SSP__
-#define __SSP__ 1
-#endif
 #ifndef __SIZEOF_INT128__
 #define __SIZEOF_INT128__ 16
 #endif
@@ -754,7 +739,7 @@
 #define __ATOMIC_CONSUME 1
 #endif
 #ifndef __GNUC_MINOR__
-#define __GNUC_MINOR__ 2
+#define __GNUC_MINOR__ 3
 #endif
 #ifndef __UINTMAX_MAX__
 #define __UINTMAX_MAX__ 0xffffffffffffffffUL
@@ -840,13 +825,12 @@
 #endif
 
 // --- Include directories begin --- //
-///usr/include/c++/6
-///usr/include/x86_64-linux-gnu/c++/6
-///usr/include/c++/6/backward
-///usr/lib/gcc/x86_64-linux-gnu/6/include
+///opt/rh/devtoolset-6/root/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../include/c++/6.3.1
+///opt/rh/devtoolset-6/root/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../include/c++/6.3.1/x86_64-redhat-linux
+///opt/rh/devtoolset-6/root/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../include/c++/6.3.1/backward
+///opt/rh/devtoolset-6/root/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include
 ///usr/local/include
-///usr/lib/gcc/x86_64-linux-gnu/6/include-fixed
-///usr/include/x86_64-linux-gnu
+///opt/rh/devtoolset-6/root/usr/include
 ///usr/include
 //myapi
 //../LinuxProject2
@@ -855,6 +839,6 @@
 
 
 // --- Library directories begin --- //
-///usr/lib/gcc/x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../:/lib/:/usr/lib/
+///opt/rh/devtoolset-6/root/usr/lib/gcc/x86_64-redhat-linux/6.3.1/:/opt/rh/devtoolset-6/root/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/rh/devtoolset-6/root/usr/lib/gcc/x86_64-redhat-linux/6.3.1/../../../:/lib/:/usr/lib/
 // --- Library directories begin --- //
 
